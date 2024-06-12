@@ -14,7 +14,7 @@ struct RegisterInfo {
 constexpr RegisterInfo STATUS_REGISTER_INFO{0x00, "uint8", 1};
 constexpr RegisterInfo SLAVE_ADDRESS_REGISTER_INFO{0x01, "uint8", 1};
 constexpr RegisterInfo CONTROL_REGISTER_INFO{0x02, "uint8", 1};
-constexpr RegisterInfo WHITE_LED_REGISTER_INFO{0x03, "uint8", 1};
+constexpr RegisterInfo ORANGE_LED_REGISTER_INFO{0x03, "uint8", 1};
 constexpr RegisterInfo RGB_LED_RED_REGISTER_INFO{0x04, "uint8", 1};
 constexpr RegisterInfo GREEN_REGISTER_INFO{0x05, "uint8", 1};
 constexpr RegisterInfo BLUE_REGISTER_INFO{0x06, "uint8", 1};
