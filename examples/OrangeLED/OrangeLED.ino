@@ -8,15 +8,15 @@
 
 void pulseLED(OrangeLED& led) {
     // Fade in
-    for (uint8_t i = 0; i < 64; ++i) {
+    for (uint8_t i = 0; i < 255; ++i) {
         led.setBrightness(i);
-        delay(10);
+        delay(4);
     }
 
     // Fade out
-    for (int8_t i = 63; i >= 0; --i) {
+    for (int8_t i = 255; i >= 0; --i) {
         led.setBrightness(i);
-        delay(10);
+        delay(4);
     }
 }
 
