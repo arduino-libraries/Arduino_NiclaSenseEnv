@@ -11,8 +11,8 @@ void RGBLED::enableIndoorAirQualityStatus() {
 
 void RGBLED::enableIndoorAirQualityStatus(uint8_t brightness) {
     writeToRegister(RGB_LED_RED_REGISTER_INFO, 0);
-    writeToRegister(GREEN_REGISTER_INFO, 0);
-    writeToRegister(BLUE_REGISTER_INFO, 0);
+    writeToRegister(RGB_LED_GREEN_REGISTER_INFO, 0);
+    writeToRegister(RGB_LED_BLUE_REGISTER_INFO, 0);
     writeToRegister(INTENSITY_REGISTER_INFO, brightness);
 }
 
@@ -22,8 +22,8 @@ void RGBLED::setColor(uint8_t r, uint8_t g, uint8_t b) {
 
 void RGBLED::setColor(uint8_t r, uint8_t g, uint8_t b, uint8_t brightness) {
     writeToRegister(RGB_LED_RED_REGISTER_INFO, r);
-    writeToRegister(GREEN_REGISTER_INFO, g);
-    writeToRegister(BLUE_REGISTER_INFO, b);
+    writeToRegister(RGB_LED_GREEN_REGISTER_INFO, g);
+    writeToRegister(RGB_LED_BLUE_REGISTER_INFO, b);
     writeToRegister(INTENSITY_REGISTER_INFO, brightness);
 }
 
@@ -37,8 +37,8 @@ void RGBLED::setColor(Color color, uint8_t brightness) {
 
 Color RGBLED::color() {
     uint8_t red = readFromRegister<uint8_t>(RGB_LED_RED_REGISTER_INFO);
-    uint8_t green = readFromRegister<uint8_t>(GREEN_REGISTER_INFO);
-    uint8_t blue = readFromRegister<uint8_t>(BLUE_REGISTER_INFO);
+    uint8_t green = readFromRegister<uint8_t>(RGB_LED_GREEN_REGISTER_INFO);
+    uint8_t blue = readFromRegister<uint8_t>(RGB_LED_BLUE_REGISTER_INFO);
     return {red, green, blue};
 }
 
