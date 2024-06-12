@@ -21,12 +21,12 @@ void setup(){
         // ...
         auto rgbLED = device.rgbLED();
         // ...
-        auto whiteLED = device.whiteLED();
+        auto orangeLED = device.orangeLED();
         // ...
     }
 }
 ```
-Once the desired object is obtained you can call functions on these objects such as `temperatureSensor.getTemperature()`. A complete list of these functions can be found in the [API documentation](./api.md).
+Once the desired object is obtained you can call functions on these objects such as `temperatureSensor.temperature()`. A complete list of these functions can be found in the [API documentation](./api.md).
 
 ## 🧑‍💻 API
 The API documentation can be found [here](./api.md).
@@ -43,4 +43,4 @@ The following scripts are examples of how to use the Nicla Sense Env board with 
 - [RGBLED.ino](../examples/RGBLED/RGBLED.ino): Demonstrates how to control the board's RGB LED.
 - [TemperatureHumidity.ino](../examples/TemperatureHumidity/TemperatureHumidity.ino): Demonstrates how to read the temperature and humidity data from the board's sensors.
 - [UARTRead.ino](../examples/UARTRead/UARTRead.ino): Shows how to read data from the UART port on the board when not connecting to it over I2C.
-- [WhiteLED.ino](../examples/WhiteLED/WhiteLED.ino): Demonstrates how to control the board's white LED.
+- [OrangeLED.ino](../examples/OrangeLED/OrangeLED.ino): Demonstrates how to control the board's orange LED.

@@ -6,7 +6,7 @@
 #include "IndoorAirQualitySensor.h"
 #include "OutdoorAirQualitySensor.h"
 #include "RGBLED.h"
-#include "WhiteLED.h"
+#include "OrangeLED.h"
 
 /**
  * @brief The NiclaSenseEnv class represents a NiclaSenseEnv device.
@@ -69,11 +69,11 @@ public:
     RGBLED& rgbLED();
 
     /**
-     * @brief Returns a reference to the WhiteLED object to interact with the white LED.
+     * @brief Returns a reference to the OrangeLED object to interact with the orange LED.
      * 
-     * @return WhiteLED& Reference to the WhiteLED object.
+     * @return OrangeLED& Reference to the OrangeLED object.
      */
-    WhiteLED& whiteLED();
+    OrangeLED& orangeLED();
 
     /**
      * @brief Ends the operation of the NiclaSenseEnv class.
@@ -97,8 +97,8 @@ public:
      *  - Indoor air quality sensor mode
      *  - Outdoor air quality sensor mode
      *  - Temperature sensor enabled
-     *  - White LED brightness
-     *  - White LED error status enabled
+     *  - Orange LED brightness
+     *  - Orange LED error status enabled
      *  - RGB LED brightness
      *  - RGB LED color
      * 
@@ -250,7 +250,7 @@ private:
     IndoorAirQualitySensor* indoorAirQualitySensorInstance = nullptr;
     OutdoorAirQualitySensor* outdoorAirQualitySensorInstance = nullptr;
     RGBLED* rgbLed = nullptr;
-    WhiteLED* whiteLed = nullptr;
+    OrangeLED* orangeLed = nullptr;
 };
 
 #endif

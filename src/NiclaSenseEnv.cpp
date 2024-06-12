@@ -43,11 +43,11 @@ RGBLED& NiclaSenseEnv::rgbLED() {
     return *rgbLed;
 }
 
-WhiteLED& NiclaSenseEnv::whiteLED() {
-    if (!whiteLed) {
-        whiteLed = new WhiteLED(this->bus, this->i2cDeviceAddress);
+OrangeLED& NiclaSenseEnv::orangeLED() {
+    if (!orangeLed) {
+        orangeLed = new OrangeLED(this->bus, this->i2cDeviceAddress);
     }
-    return *whiteLed;
+    return *orangeLed;
 }
 
 void NiclaSenseEnv::end() {
@@ -67,9 +67,9 @@ void NiclaSenseEnv::end() {
         delete rgbLed;
         rgbLed = nullptr;
     }
-    if (whiteLed) {
-        delete whiteLed;
-        whiteLed = nullptr;
+    if (orangeLed) {
+        delete orangeLed;
+        orangeLed = nullptr;
     }
 }
 

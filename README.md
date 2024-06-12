@@ -1,6 +1,9 @@
 # 🤖 Nicla Sense Env Arduino Library
 
-[![Arduino Lint](https://github.com/arduino-libraries/Arduino_NiclaSenseEnv/actions/workflows/arduino-lint.yml/badge.svg)](https://github.com/arduino-libraries/Arduino_NiclaSenseEnv/actions/workflows/arduino-lint.yml) [![Compile Examples](https://github.com/arduino-libraries/Arduino_NiclaSenseEnv/actions/workflows/compile-examples.yml/badge.svg)](https://github.com/arduino-libraries/Arduino_NiclaSenseEnv/actions/workflows/compile-examples.yml) [![Spell Check](https://github.com/arduino-libraries/Arduino_NiclaSenseEnv/actions/workflows/spell-check.yml/badge.svg)](https://github.com/arduino-libraries/Arduino_NiclaSenseEnv/actions/workflows/spell-check.yml)
+[![Arduino Lint](https://github.com/arduino-libraries/Arduino_NiclaSenseEnv/actions/workflows/arduino-lint.yml/badge.svg)](https://github.com/arduino-libraries/Arduino_NiclaSenseEnv/actions/workflows/arduino-lint.yml) 
+[![Compile Examples](https://github.com/arduino-libraries/Arduino_NiclaSenseEnv/actions/workflows/compile-examples.yml/badge.svg)](https://github.com/arduino-libraries/Arduino_NiclaSenseEnv/actions/workflows/compile-examples.yml) 
+[![Spell Check](https://github.com/arduino-libraries/Arduino_NiclaSenseEnv/actions/workflows/spell-check.yml/badge.svg)](https://github.com/arduino-libraries/Arduino_NiclaSenseEnv/actions/workflows/spell-check.yml)
+[![API Documentation](https://github.com/arduino-libraries/Arduino_NiclaSenseEnv/actions/workflows/render-documentation.yml/badge.svg)](https://github.com/arduino-libraries/Arduino_NiclaSenseEnv/actions/workflows/render-documentation.yml) 
 
 This library contains an API to read data from the Nicla Sense Env board and control its behaviour.  The board host three different sensors which can be read simultaneously: **ZMOD4410** (Indoor Air Quality), **ZMOD4510** (Outdoor Air Quality), **HS4001** (Temperature & Humidity).
 
@@ -9,7 +12,7 @@ This library contains an API to read data from the Nicla Sense Env board and con
 This library supports the complete API exposed by the Nicla Sense Env sensor board over I2C.
 
 - 🌈 RGB LED control
-- ⚪️ White LED control
+- 🟠 Orange LED control
 - 💤 Board control (sleep, reset, factory reset)
 - 🔧 Board configuration (e.g. changing the I2C address)
 - 🏠 Indoor Air Quality Sensor control
