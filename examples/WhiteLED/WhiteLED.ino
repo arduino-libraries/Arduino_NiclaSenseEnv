@@ -1,12 +1,12 @@
 /**
- * This example shows how to control the white LED on the Nicla Sense Env board.
+ * This example shows how to control the orange LED on the Nicla Sense Env board.
  * 
  * Initial author: Sebastian Romero (s.romero@arduino.cc)
  */
 
 #include "NiclaSenseEnv.h"
 
-void pulseLED(WhiteLED& led) {
+void pulseLED(OrangeLED& led) {
     // Fade in
     for (uint8_t i = 0; i < 64; ++i) {
         led.setBrightness(i);
@@ -29,17 +29,17 @@ void setup() {
     NiclaSenseEnv device;
 
     if (device.begin()) {
-        auto whiteLED = device.whiteLED();
+        auto orangeLED = device.orangeLED();
         
-        Serial.print("🔢 White LED error status enabled: ");
-        Serial.println(whiteLED.errorStatusEnabled());
-        Serial.print("💡 White LED brightness: ");
-        Serial.println(whiteLED.brightness());
+        Serial.print("🔢 Orange LED error status enabled: ");
+        Serial.println(orangeLED.errorStatusEnabled());
+        Serial.print("💡 Orange LED brightness: ");
+        Serial.println(orangeLED.brightness());
 
-        pulseLED(whiteLED);
+        pulseLED(orangeLED);
 
-        // Enable sensor error indication on white LED (LED should turn off if sensors are okay)
-        whiteLED.setErrorStatusEnabled(true);
+        // Enable sensor error indication on orange LED (LED should turn off if sensors are okay)
+        orangeLED.setErrorStatusEnabled(true);
     } else {
         Serial.println("🤷 Device could not be found. Please double-check the wiring.");
     }

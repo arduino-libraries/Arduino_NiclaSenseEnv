@@ -9,7 +9,7 @@ This library contains an API to read data from the Nicla Sense Env board and con
 This library supports the complete API exposed by the Nicla Sense Env sensor board over I2C.
 
 - 🌈 RGB LED control
-- ⚪️ White LED control
+- 🟠 Orange LED control
 - 💤 Board control (sleep, reset, factory reset)
 - 🔧 Board configuration (e.g. changing the I2C address)
 - 🏠 Indoor Air Quality Sensor control
