@@ -5,10 +5,10 @@
 `class ` [`I2CDevice`](#class_i2_c_device) | Class for interacting with I2C devices.
 `class ` [`IndoorAirQualitySensor`](#class_indoor_air_quality_sensor) | Represents an indoor air quality sensor.
 `class ` [`NiclaSenseEnv`](#class_nicla_sense_env) | The [NiclaSenseEnv](#class_nicla_sense_env) class represents a [NiclaSenseEnv](#class_nicla_sense_env) device.
+`class ` [`OrangeLED`](#class_orange_l_e_d) | Represents the orange on-board LED controlled via I2C.
 `class ` [`OutdoorAirQualitySensor`](#class_outdoor_air_quality_sensor) | Class representing an outdoor air quality sensor (ZMOD4510)
 `class ` [`RGBLED`](#class_r_g_b_l_e_d) | Represents the on-board RGB LED that can be controlled using I2C communication.
 `class ` [`TemperatureHumiditySensor`](#class_temperature_humidity_sensor) | Represents a temperature and humidity sensor.
-`class ` [`WhiteLED`](#class_white_l_e_d) | Represents the white on-board LED controlled via I2C.
 `struct ` [`Color`](#struct_color) | Represents a color with red, green, and blue components.
 `struct ` [`RegisterInfo`](#struct_register_info) | Structure representing information about a register.
 
@@ -335,7 +335,7 @@ This class provides methods to interact with the device to enable and disable fe
 | [`indoorAirQualitySensor`](#class_nicla_sense_env_1a4c36a3cc7c0dc351a720fe3bd8ce2ede) | Returns the [IndoorAirQualitySensor](#class_indoor_air_quality_sensor) object to interact with the indoor air quality sensor. |
 | [`outdoorAirQualitySensor`](#class_nicla_sense_env_1a13c8a3127acea0364f1e771a49ad89d6) | Returns the [OutdoorAirQualitySensor](#class_outdoor_air_quality_sensor) object to interact with the outdoor air quality sensor. |
 | [`rgbLED`](#class_nicla_sense_env_1aea2da7e61de2736756eba56b417eaa0b) | Returns the [RGBLED](#class_r_g_b_l_e_d) object to interact with the RGB LED. |
-| [`whiteLED`](#class_nicla_sense_env_1a1af09dea01d88457cb8cb68ba200254f) | Returns a reference to the [WhiteLED](#class_white_l_e_d) object to interact with the white LED. |
+| [`orangeLED`](#class_nicla_sense_env_1a7938bdcc03918a9900538373e0c02156) | Returns a reference to the [OrangeLED](#class_orange_l_e_d) object to interact with the orange LED. |
 | [`end`](#class_nicla_sense_env_1abba16f72b55ddfd648c8cde348eb6338) | Ends the operation of the [NiclaSenseEnv](#class_nicla_sense_env) class. |
 | [`storeSettingsInFlash`](#class_nicla_sense_env_1a907e93c5063c85f3d686fe87a0b1218b) | Writes the current configuration to the flash memory. Stores board register 0x00 … 0x0B in flash to be default after reset. |
 | [`serialNumber`](#class_nicla_sense_env_1a8c580892d180c058380e6e497b36230a) | Retrieves the serial number of the device. |
@@ -440,16 +440,16 @@ Returns the [RGBLED](#class_r_g_b_l_e_d) object to interact with the RGB LED.
 [RGBLED](#class_r_g_b_l_e_d)& The reference to the [RGBLED](#class_r_g_b_l_e_d) object.
 <hr />
 
-### `whiteLED` <a id="class_nicla_sense_env_1a1af09dea01d88457cb8cb68ba200254f" class="anchor"></a>
+### `orangeLED` <a id="class_nicla_sense_env_1a7938bdcc03918a9900538373e0c02156" class="anchor"></a>
 
 ```cpp
-WhiteLED & whiteLED()
+OrangeLED & orangeLED()
 ```
 
-Returns a reference to the [WhiteLED](#class_white_l_e_d) object to interact with the white LED.
+Returns a reference to the [OrangeLED](#class_orange_l_e_d) object to interact with the orange LED.
 
 #### Returns
-[WhiteLED](#class_white_l_e_d)& Reference to the [WhiteLED](#class_white_l_e_d) object.
+[OrangeLED](#class_orange_l_e_d)& Reference to the [OrangeLED](#class_orange_l_e_d) object.
 <hr />
 
 ### `end` <a id="class_nicla_sense_env_1abba16f72b55ddfd648c8cde348eb6338" class="anchor"></a>
@@ -489,9 +489,9 @@ This affects the following properties:
 
 * Temperature sensor enabled
 
-* White LED brightness
+* Orange LED brightness
 
-* White LED error status enabled
+* Orange LED error status enabled
 
 * RGB LED brightness
 
@@ -680,6 +680,100 @@ Sets the I2C address of the device. Call [storeSettingsInFlash()](#class_nicla_s
 
 #### Parameters
 * `address` The new I2C address. Valid values are 0 to 127.
+<hr />
+
+# class `OrangeLED` <a id="class_orange_l_e_d" class="anchor"></a>
+
+```cpp
+class OrangeLED
+  : public I2CDevice
+```
+
+Represents the orange on-board LED controlled via I2C.
+
+The [OrangeLED](#class_orange_l_e_d) class provides methods to control the brightness and error status of the orange LED. It inherits from the [I2CDevice](#class_i2_c_device) class.
+
+## Summary
+
+ Members                        | Descriptions                                
+--------------------------------|---------------------------------------------
+| [`OrangeLED`](#class_orange_l_e_d_1af92a1e92f3505ff5cc30b364e142a710) | Constructs a [OrangeLED](#class_orange_l_e_d) object. |
+| [`OrangeLED`](#class_orange_l_e_d_1a31e760ce8acade6fdb3d42f4c0e2d9cd) | Constructs a [OrangeLED](#class_orange_l_e_d) object with the specified device address. |
+| [`brightness`](#class_orange_l_e_d_1a62c8337f91700b78fdfaba6ab401d080) | Gets the brightness of the orange LED.  |
+| [`setBrightness`](#class_orange_l_e_d_1af489b380c5a3ffc78ee4754f8875edd3) | Sets the brightness of the orange LED. Call storeSettingsInFlash() on [NiclaSenseEnv](#class_nicla_sense_env) instance after changing the orange LED brightness to make the change persistent.  |
+| [`errorStatusEnabled`](#class_orange_l_e_d_1a01b9f52a9cc4490df7ed2e0e59f17b71) | Determines whether the orange LED is used to indicate an error status of one of the sensors.  |
+| [`setErrorStatusEnabled`](#class_orange_l_e_d_1aac531fa45b968ca6662b3dc6f698065a) | Enables or disables the orange LED to indicate an error status of one of the sensors. Call storeSettingsInFlash() on [NiclaSenseEnv](#class_nicla_sense_env) instance after enabling/disabling the orange LED error status to make the change persistent.  |
+
+## Members
+
+### `OrangeLED` <a id="class_orange_l_e_d_1af92a1e92f3505ff5cc30b364e142a710" class="anchor"></a>
+
+```cpp
+OrangeLED(TwoWire & bus, uint8_t deviceAddress)
+```
+
+Constructs a [OrangeLED](#class_orange_l_e_d) object.
+
+#### Parameters
+* `bus` The I2C bus to use (default is Wire). 
+
+* `deviceAddress` The I2C device address (default is 0x21).
+<hr />
+
+### `OrangeLED` <a id="class_orange_l_e_d_1a31e760ce8acade6fdb3d42f4c0e2d9cd" class="anchor"></a>
+
+```cpp
+OrangeLED(uint8_t deviceAddress)
+```
+
+Constructs a [OrangeLED](#class_orange_l_e_d) object with the specified device address.
+
+#### Parameters
+* `deviceAddress` The I2C address of the [OrangeLED](#class_orange_l_e_d) device.
+<hr />
+
+### `brightness` <a id="class_orange_l_e_d_1a62c8337f91700b78fdfaba6ab401d080" class="anchor"></a>
+
+```cpp
+uint8_t brightness()
+```
+
+Gets the brightness of the orange LED. 
+#### Returns
+The brightness of the orange LED. Range is 0 to 63.
+<hr />
+
+### `setBrightness` <a id="class_orange_l_e_d_1af489b380c5a3ffc78ee4754f8875edd3" class="anchor"></a>
+
+```cpp
+void setBrightness(uint8_t brightness)
+```
+
+Sets the brightness of the orange LED. Call storeSettingsInFlash() on [NiclaSenseEnv](#class_nicla_sense_env) instance after changing the orange LED brightness to make the change persistent. 
+#### Parameters
+* `brightness` : The brightness of the orange LED. Range is 0 to 63.
+<hr />
+
+### `errorStatusEnabled` <a id="class_orange_l_e_d_1a01b9f52a9cc4490df7ed2e0e59f17b71" class="anchor"></a>
+
+```cpp
+bool errorStatusEnabled()
+```
+
+Determines whether the orange LED is used to indicate an error status of one of the sensors. 
+#### Returns
+True if the orange LED is used for error status, false otherwise.
+<hr />
+
+### `setErrorStatusEnabled` <a id="class_orange_l_e_d_1aac531fa45b968ca6662b3dc6f698065a" class="anchor"></a>
+
+```cpp
+void setErrorStatusEnabled(bool enabled)
+```
+
+Enables or disables the orange LED to indicate an error status of one of the sensors. Call storeSettingsInFlash() on [NiclaSenseEnv](#class_nicla_sense_env) instance after enabling/disabling the orange LED error status to make the change persistent. 
+#### Parameters
+* `enabled` : Whether to enable or disable the orange LED error status.
 <hr />
 
 # class `OutdoorAirQualitySensor` <a id="class_outdoor_air_quality_sensor" class="anchor"></a>
@@ -1129,100 +1223,6 @@ Sets the enabled state of the temperature and humidity sensor. When disabled the
 
 #### Parameters
 * `enabled` The desired enabled state. True to enable the sensor, false to disable it.
-<hr />
-
-# class `WhiteLED` <a id="class_white_l_e_d" class="anchor"></a>
-
-```cpp
-class WhiteLED
-  : public I2CDevice
-```
-
-Represents the white on-board LED controlled via I2C.
-
-The [WhiteLED](#class_white_l_e_d) class provides methods to control the brightness and error status of the white LED. It inherits from the [I2CDevice](#class_i2_c_device) class.
-
-## Summary
-
- Members                        | Descriptions                                
---------------------------------|---------------------------------------------
-| [`WhiteLED`](#class_white_l_e_d_1adcf1e382e477873960da30a0bb400ad6) | Constructs a [WhiteLED](#class_white_l_e_d) object. |
-| [`WhiteLED`](#class_white_l_e_d_1a1dc4ba991f873c157e2f7b20184fea20) | Constructs a [WhiteLED](#class_white_l_e_d) object with the specified device address. |
-| [`brightness`](#class_white_l_e_d_1a2f317399b282682c6ba4aacb81dec7d2) | Gets the brightness of the white LED.  |
-| [`setBrightness`](#class_white_l_e_d_1a0bb03cf87162ca9eb2ddeb502d24b77c) | Sets the brightness of the white LED. Call storeSettingsInFlash() on [NiclaSenseEnv](#class_nicla_sense_env) instance after changing the white LED brightness to make the change persistent.  |
-| [`errorStatusEnabled`](#class_white_l_e_d_1af45fbcf2de55ec9550c68a64203e0a2b) | Determines whether the white LED is used to indicate an error status of one of the sensors.  |
-| [`setErrorStatusEnabled`](#class_white_l_e_d_1a6b9457558f6fc4408a4f9f89153d1c9d) | Enables or disables the white LED to indicate an error status of one of the sensors. Call storeSettingsInFlash() on [NiclaSenseEnv](#class_nicla_sense_env) instance after enabling/disabling the white LED error status to make the change persistent.  |
-
-## Members
-
-### `WhiteLED` <a id="class_white_l_e_d_1adcf1e382e477873960da30a0bb400ad6" class="anchor"></a>
-
-```cpp
-WhiteLED(TwoWire & bus, uint8_t deviceAddress)
-```
-
-Constructs a [WhiteLED](#class_white_l_e_d) object.
-
-#### Parameters
-* `bus` The I2C bus to use (default is Wire). 
-
-* `deviceAddress` The I2C device address (default is 0x21).
-<hr />
-
-### `WhiteLED` <a id="class_white_l_e_d_1a1dc4ba991f873c157e2f7b20184fea20" class="anchor"></a>
-
-```cpp
-WhiteLED(uint8_t deviceAddress)
-```
-
-Constructs a [WhiteLED](#class_white_l_e_d) object with the specified device address.
-
-#### Parameters
-* `deviceAddress` The I2C address of the [WhiteLED](#class_white_l_e_d) device.
-<hr />
-
-### `brightness` <a id="class_white_l_e_d_1a2f317399b282682c6ba4aacb81dec7d2" class="anchor"></a>
-
-```cpp
-uint8_t brightness()
-```
-
-Gets the brightness of the white LED. 
-#### Returns
-The brightness of the white LED. Range is 0 to 63.
-<hr />
-
-### `setBrightness` <a id="class_white_l_e_d_1a0bb03cf87162ca9eb2ddeb502d24b77c" class="anchor"></a>
-
-```cpp
-void setBrightness(uint8_t brightness)
-```
-
-Sets the brightness of the white LED. Call storeSettingsInFlash() on [NiclaSenseEnv](#class_nicla_sense_env) instance after changing the white LED brightness to make the change persistent. 
-#### Parameters
-* `brightness` : The brightness of the white LED. Range is 0 to 63.
-<hr />
-
-### `errorStatusEnabled` <a id="class_white_l_e_d_1af45fbcf2de55ec9550c68a64203e0a2b" class="anchor"></a>
-
-```cpp
-bool errorStatusEnabled()
-```
-
-Determines whether the white LED is used to indicate an error status of one of the sensors. 
-#### Returns
-True if the white LED is used for error status, false otherwise.
-<hr />
-
-### `setErrorStatusEnabled` <a id="class_white_l_e_d_1a6b9457558f6fc4408a4f9f89153d1c9d" class="anchor"></a>
-
-```cpp
-void setErrorStatusEnabled(bool enabled)
-```
-
-Enables or disables the white LED to indicate an error status of one of the sensors. Call storeSettingsInFlash() on [NiclaSenseEnv](#class_nicla_sense_env) instance after enabling/disabling the white LED error status to make the change persistent. 
-#### Parameters
-* `enabled` : Whether to enable or disable the white LED error status.
 <hr />
 
 # struct `Color` <a id="struct_color" class="anchor"></a>
