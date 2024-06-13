@@ -95,7 +95,7 @@ public:
      * This function allows you to set the mode of the outdoor air quality sensor.
      * Possible values are: powerDown, cleaning, outdoorAirQuality.
      * See OutdoorAirQualitySensorMode for more information.
-     * Call storeSettingsInFlash() on NiclaSenseEnv instance after changing the mode to make the change persistent.
+     * Call persistSettings() on NiclaSenseEnv instance after changing the mode to make the change persistent.
      * 
      * Note on cleaning mode:
      * The cleaning mode performs a thermal cleaning cycle of the MOx element. It can eliminate some light pollution 
@@ -126,7 +126,8 @@ public:
     /**
      * @brief Sets the enabled state of the outdoor air quality sensor.
      * When disabled the sensor goes in power down mode.
-     * Call storeSettingsInFlash() on NiclaSenseEnv instance after changing the enabled state to make the change persistent.
+     * When the sensor is enabled after being disabled, the sensor will go back to the default mode.
+     * Call persistSettings() on NiclaSenseEnv instance after changing the enabled state to make the change persistent.
      * @param isEnabled True to enable the sensor, false to disable it.
      */
     void setEnabled(bool isEnabled);

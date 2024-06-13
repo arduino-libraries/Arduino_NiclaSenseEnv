@@ -106,7 +106,7 @@ public:
      * 
      * @return true if the settings were successfully stored, false otherwise.
      */
-    bool storeSettingsInFlash();
+    bool persistSettings();
 
     /**
      * @brief Retrieves the serial number of the device.
@@ -148,7 +148,7 @@ public:
     /**
      * @brief Restores the factory settings.
      * This will reset among other properties the device address to the default value.
-     * See storeSettingsInFlash() for a complete list of properties that are affected by this method.
+     * See persistSettings() for a complete list of properties that are affected by this method.
      * 
      * @return true if the factory settings were successfully restored, false otherwise.
      */
@@ -163,7 +163,7 @@ public:
 
     /**
      * @brief Sets the baud rate for the UART communication.
-     * Call storeSettingsInFlash() on NiclaSenseEnv instance after changing the baud rate to make the change persistent.
+     * Call persistSettings() on NiclaSenseEnv instance after changing the baud rate to make the change persistent.
      * @param baudRate The desired baud rate for the UART communication.
      The supported values are: 1200, 2400, 4800, 9600, 19200, 38400, 57600, 115200
      */
@@ -179,7 +179,7 @@ public:
     /**
      * @brief Sets the UART CSV output enabled or disabled.
      *  Enables or disables CSV output over UART.
-     *  Call storeSettingsInFlash() on NiclaSenseEnv instance after changing the CSV output mode to make the change persistent.
+     *  Call persistSettings() on NiclaSenseEnv instance after changing the CSV output mode to make the change persistent.
      *
      *  The column names and their order are:
      *  HS4001 sample counter, HS4001 temperature (degC), HS4001 humidity (%RH), ZMOD4510 status, ZMOD4510 sample counter, 
@@ -205,7 +205,7 @@ public:
 
     /**
      * @brief Sets the CSV delimiter for parsing CSV data.
-     * Call storeSettingsInFlash() on NiclaSenseEnv instance after changing the CSV delimiter to make the change persistent.
+     * Call persistSettings() on NiclaSenseEnv instance after changing the CSV delimiter to make the change persistent.
      * @param delimiter The character to be used as the CSV delimiter.
      */
     void setCSVDelimiter(char delimiter);
@@ -220,14 +220,14 @@ public:
     /**
      * @brief Toggles the debugging mode.
      * When debugging mode is enabled, the board will send additional debug messages over UART.
-     * Call storeSettingsInFlash() on NiclaSenseEnv instance after changing the debugging mode to make the change persistent.
+     * Call persistSettings() on NiclaSenseEnv instance after changing the debugging mode to make the change persistent.
      * @param enabled A boolean value indicating whether debugging is enabled or not.
      */
     void setDebuggingEnabled(bool enabled);
 
     /**
      * @brief Sets the I2C address of the device.
-     * Call storeSettingsInFlash() on NiclaSenseEnv instance after changing the address to make the change persistent.
+     * Call persistSettings() on NiclaSenseEnv instance after changing the address to make the change persistent.
      * 
      * @param address The new I2C address. Valid values are 0 to 127.
      */

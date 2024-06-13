@@ -39,7 +39,7 @@ void setup() {
     checkConnection(device);
 
     // Store the new address in flash
-    device.storeSettingsInFlash();
+    device.persistSettings();
 
     Serial.println("🔄 Resetting device to check if change is persistent...");
     device.reset();

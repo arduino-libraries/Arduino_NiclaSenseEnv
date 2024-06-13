@@ -13,7 +13,7 @@
  * NiclaSenseEnv device;
  * device.begin();
  * device.setUARTCSVOutputEnabled(true);
- * device.storeSettingsInFlash() # Store the settings so they are not lost after a reset
+ * device.persistSettings() # Store the settings so they are not lost after a reset
  * 
  * Initial author: Sebastian Romero (s.romero@arduino.cc)
  * 

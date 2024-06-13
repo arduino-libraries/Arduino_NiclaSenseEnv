@@ -60,7 +60,7 @@ public:
     /**
      * @brief Sets the enabled state of the temperature and humidity sensor.
      * When disabled the sensor goes in power down mode.
-     * Call storeSettingsInFlash() on NiclaSenseEnv instance after changing the enabled state to make the change persistent.
+     * Call persistSettings() on NiclaSenseEnv instance after changing the enabled state to make the change persistent.
      * @param enabled The desired enabled state. True to enable the sensor, false to disable it.
      */
     void setEnabled(bool enabled);

@@ -73,7 +73,7 @@ void NiclaSenseEnv::end() {
     }
 }
 
-bool NiclaSenseEnv::storeSettingsInFlash() {
+bool NiclaSenseEnv::persistSettings() {
     uint8_t controlRegisterData = readFromRegister<uint8_t>(CONTROL_REGISTER_INFO);
 
     writeToRegister(CONTROL_REGISTER_INFO, controlRegisterData | (1 << 7));
@@ -137,7 +137,7 @@ bool NiclaSenseEnv::restoreFactorySettings() {
         boardControlRegisterData = readFromRegister<uint8_t>(CONTROL_REGISTER_INFO);
         
         if ((boardControlRegisterData & (1 << 5)) == 0) {
-            return storeSettingsInFlash();
+            return persistSettings();
         }
         Serial.println("⌛️ Waiting for factory reset to complete...");
         // Exponential sleep duration

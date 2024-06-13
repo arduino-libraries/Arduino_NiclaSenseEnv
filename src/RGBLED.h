@@ -42,7 +42,7 @@ public:
     /**
      * Enables the indoor air quality status indicator on the RGB LED.
      * When enabled, the RGB LED will change color based on the air quality (red = bad, green = good)
-     * Call storeSettingsInFlash() on NiclaSenseEnv instance after enabling the indoor air quality status to make the change persistent.
+     * Call persistSettings() on NiclaSenseEnv instance after enabling the indoor air quality status to make the change persistent.
      * @param brightness The brightness level of the indicator (0-255).
      */
     void enableIndoorAirQualityStatus(uint8_t brightness);
@@ -51,7 +51,7 @@ public:
      * @brief Sets the RGB values of the LED.
      *
      * This function sets the red, green, and blue values of the LED using individual values.
-     * Call storeSettingsInFlash() on NiclaSenseEnv instance after changing the color to make the change persistent.
+     * Call persistSettings() on NiclaSenseEnv instance after changing the color to make the change persistent.
      * @param r The red value (0-255).
      * @param g The green value (0-255).
      * @param b The blue value (0-255).
@@ -60,7 +60,7 @@ public:
 
     /**
      * Sets the RGB values of the LED along with the specified brightness.
-     * Call storeSettingsInFlash() on NiclaSenseEnv instance after changing the color to make the change persistent.
+     * Call persistSettings() on NiclaSenseEnv instance after changing the color to make the change persistent.
      * @param r The red value (0-255).
      * @param g The green value (0-255).
      * @param b The blue value (0-255).
@@ -71,14 +71,14 @@ public:
     /**
      * @brief Sets the RGB color of the LED using a Color object.
      * The Color object contains the red, green, and blue values that can be changed individually.
-     * Call storeSettingsInFlash() on NiclaSenseEnv instance after changing the color to make the change persistent.
+     * Call persistSettings() on NiclaSenseEnv instance after changing the color to make the change persistent.
      * @param color The RGB color to set.
      */
     void setColor(Color color);
 
     /**
      * @brief Sets the RGB color and brightness of the LED using a Color object.
-     * Call Call storeSettingsInFlash() on NiclaSenseEnv instance after changing the color / brightness to make the change persistent.
+     * Call Call persistSettings() on NiclaSenseEnv instance after changing the color / brightness to make the change persistent.
      * @param color The desired RGB color.
      * @param brightness The desired brightness level (0-255).
      */
@@ -101,7 +101,7 @@ public:
     /**
      * @brief Sets the brightness of the RGB LED.
      * This function allows you to adjust the brightness of the RGB LED.
-     * Call storeSettingsInFlash() on NiclaSenseEnv instance after changing the brightness to make the change persistent.
+     * Call persistSettings() on NiclaSenseEnv instance after changing the brightness to make the change persistent.
      * @param brightness The brightness level to set (0-255).
      */
     void setBrightness(uint8_t brightness);

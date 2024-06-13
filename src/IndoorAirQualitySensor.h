@@ -97,7 +97,7 @@ public:
 
     /**
      * @brief Set the mode of the IndoorAirQualitySensor.
-     * Call storeSettingsInFlash() on NiclaSenseEnv instance after changing the mode to make the change persistent.
+     * Call persistSettings() on NiclaSenseEnv instance after changing the mode to make the change persistent.
      * 
      * Note on cleaning mode:
      * The cleaning mode performs a thermal cleaning cycle of the MOx element. It can eliminate some light pollution 
@@ -136,7 +136,7 @@ public:
 
     /**
      * @brief Set the sensor enabled or disabled.
-     * Call storeSettingsInFlash() on NiclaSenseEnv instance after changing the enabled state to make the change persistent.
+     * Call persistSettings() on NiclaSenseEnv instance after changing the enabled state to make the change persistent.
      * @param isEnabled True to enable the sensor, false to disable it.
      */
     void setEnabled(bool isEnabled);
