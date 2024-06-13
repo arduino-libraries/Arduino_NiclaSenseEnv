@@ -47,5 +47,6 @@ constexpr RegisterInfo ZMOD4410_RHTR_REGISTER_INFO{0xC4, "float", 4};
 constexpr RegisterInfo ZMOD4410_TEMP_REGISTER_INFO{0xC8, "float", 4};
 constexpr RegisterInfo ZMOD4410_INTENSITY_REGISTER_INFO{0xCC, "float", 4};
 constexpr RegisterInfo ZMOD4410_ODOR_CLASS_REGISTER_INFO{0xD0, "uint8", 1};
+constexpr RegisterInfo DEFAULTS_REGISTER_INFO{0xD4, "uint8", 1};
 
 #endif

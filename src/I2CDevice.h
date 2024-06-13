@@ -142,6 +142,12 @@ protected:
     }
 
     /**
+     * @brief Makes the value of a given register persistent.
+     * @param registerInfo The register to make persistent.
+     */
+    bool persistRegister(RegisterInfo registerInfo);
+
+    /**
      * @brief Reference to the I2C bus used by the device.
      */
     TwoWire& bus;
