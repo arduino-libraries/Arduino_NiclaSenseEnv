@@ -10,7 +10,7 @@ enum class OutdoorAirQualitySensorMode {
     powerDown = 0, ///< Mode to turn off the sensor and reduce power consumption
     cleaning = 1, ///< Cleaning mode to perform a thermal cleaning cycle of the MOx element
     outdoorAirQuality = 2, ///< Mode to measure outdoor air quality
-    defaultMode = powerDown // Can't use default as it's a reserved keyword
+    defaultMode = powerDown // Can't use 'default'  as it's a reserved keyword
 };
 
 /**
@@ -126,7 +126,7 @@ public:
     /**
      * @brief Sets the enabled state of the outdoor air quality sensor.
      * When disabled the sensor goes in power down mode.
-     * When the sensor is enabled after being disabled, the sensor will go back to the default mode.
+     * When the sensor is enabled after being disabled, the sensor will go back to the outdoorAirQuality mode.
      * Call persistSettings() on NiclaSenseEnv instance after changing the enabled state to make the change persistent.
      * @param isEnabled True to enable the sensor, false to disable it.
      */

@@ -79,7 +79,7 @@ void OutdoorAirQualitySensor::setEnabled(bool isEnabled) {
         return;
     }
     if (isEnabled) {
-        setMode(OutdoorAirQualitySensorMode::defaultMode);
+        setMode(OutdoorAirQualitySensorMode::outdoorAirQuality);
     } else {
         setMode(OutdoorAirQualitySensorMode::powerDown);
     }
