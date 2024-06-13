@@ -163,11 +163,11 @@ public:
 
     /**
      * @brief Sets the baud rate for the UART communication.
-     * Call persistSettings() on NiclaSenseEnv instance after changing the baud rate to make the change persistent.
      * @param baudRate The desired baud rate for the UART communication.
      The supported values are: 1200, 2400, 4800, 9600, 19200, 38400, 57600, 115200
+     * @param persist Set to true to store the setting in flash, to false otherwise.
      */
-    void setUARTBaudRate(int baudRate);
+    bool setUARTBaudRate(int baudRate, bool persist);
 
     /**
      * @brief Checks if UART CSV output is enabled.
@@ -179,7 +179,6 @@ public:
     /**
      * @brief Sets the UART CSV output enabled or disabled.
      *  Enables or disables CSV output over UART.
-     *  Call persistSettings() on NiclaSenseEnv instance after changing the CSV output mode to make the change persistent.
      *
      *  The column names and their order are:
      *  HS4001 sample counter, HS4001 temperature (degC), HS4001 humidity (%RH), ZMOD4510 status, ZMOD4510 sample counter, 
@@ -193,8 +192,10 @@ public:
      *  Only the columns for this sensor will be filled, the other columns will be empty.
      * 
      * @param enabled True to enable UART CSV output, false to disable.
+     * @param persist True to store the setting in flash, false otherwise.
+     *                When set to True, it will also persist the value set via `setDebuggingEnabled`.
      */
-    void setUARTCSVOutputEnabled(bool enabled);
+    bool setUARTCSVOutputEnabled(bool enabled, bool persist = false);
 
     /**
      * @brief Gets the CSV delimiter character.
@@ -205,10 +206,10 @@ public:
 
     /**
      * @brief Sets the CSV delimiter for parsing CSV data.
-     * Call persistSettings() on NiclaSenseEnv instance after changing the CSV delimiter to make the change persistent.
      * @param delimiter The character to be used as the CSV delimiter.
+     * @param persist If true, the change will be saved to flash memory.
      */
-    void setCSVDelimiter(char delimiter);
+    bool setCSVDelimiter(char delimiter, bool persist = false);
 
     /**
      * @brief Checks if debugging is enabled.
@@ -220,18 +221,19 @@ public:
     /**
      * @brief Toggles the debugging mode.
      * When debugging mode is enabled, the board will send additional debug messages over UART.
-     * Call persistSettings() on NiclaSenseEnv instance after changing the debugging mode to make the change persistent.
      * @param enabled A boolean value indicating whether debugging is enabled or not.
+     * @param persist If true, the change will be saved to flash memory.
+     * When setting this to true the value set via `setUARTCSVOutputEnabled` will also be persisted.
      */
-    void setDebuggingEnabled(bool enabled);
+    bool setDebuggingEnabled(bool enabled, bool persist = false);
 
     /**
      * @brief Sets the I2C address of the device.
-     * Call persistSettings() on NiclaSenseEnv instance after changing the address to make the change persistent.
      * 
      * @param address The new I2C address. Valid values are 0 to 127.
+     * @param persist If true, the change will be saved to flash memory.
      */
-    void setDeviceAddress(int address);
+    bool setDeviceAddress(int address, bool persist = false);
 
 private:
     /**

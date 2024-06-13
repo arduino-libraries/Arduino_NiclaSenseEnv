@@ -52,7 +52,7 @@ IndoorAirQualitySensorMode IndoorAirQualitySensor::mode() {
     return IndoorAirQualitySensorMode((data >> 1) & 7);
 }
 
-void IndoorAirQualitySensor::setMode(IndoorAirQualitySensorMode sensorMode) {
+bool IndoorAirQualitySensor::setMode(IndoorAirQualitySensorMode sensorMode, bool persist) {
     uint8_t currentRegisterData = readFromRegister<uint8_t>(STATUS_REGISTER_INFO);
     uint8_t mode = static_cast<uint8_t>(sensorMode); // convert to numeric type
 
@@ -60,7 +60,15 @@ void IndoorAirQualitySensor::setMode(IndoorAirQualitySensorMode sensorMode) {
     if ((currentRegisterData & (7 << 1)) == (mode << 1)) {
         return;
     }
-    writeToRegister(STATUS_REGISTER_INFO, (currentRegisterData & ~(7 << 1)) | (mode << 1));
+    if(!writeToRegister(STATUS_REGISTER_INFO, (currentRegisterData & ~(7 << 1)) | (mode << 1))){
+        return false;
+    }
+
+    if(persist){
+        return persistRegister(STATUS_REGISTER_INFO);
+    }
+
+    return true;
 }
 
 String IndoorAirQualitySensor::modeString() {
@@ -85,13 +93,11 @@ bool IndoorAirQualitySensor::enabled() {
     return mode() != IndoorAirQualitySensorMode::powerDown;
 }
 
-void IndoorAirQualitySensor::setEnabled(bool isEnabled) {
+bool IndoorAirQualitySensor::setEnabled(bool isEnabled, bool persist) {
     if (isEnabled == enabled()) {
         return;
     }
-    if (isEnabled) {
-        setMode(IndoorAirQualitySensorMode::defaultMode);
-    } else {
-        setMode(IndoorAirQualitySensorMode::powerDown);
-    }
+
+    auto mode = isEnabled ? IndoorAirQualitySensorMode::indoorAirQuality : IndoorAirQualitySensorMode::powerDown;
+    return setMode(mode, persist);
 }

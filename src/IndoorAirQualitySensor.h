@@ -97,7 +97,6 @@ public:
 
     /**
      * @brief Set the mode of the IndoorAirQualitySensor.
-     * Call persistSettings() on NiclaSenseEnv instance after changing the mode to make the change persistent.
      * 
      * Note on cleaning mode:
      * The cleaning mode performs a thermal cleaning cycle of the MOx element. It can eliminate some light pollution 
@@ -117,8 +116,11 @@ public:
      * For more accurate readings, use the default indoor air quality mode.
      * 
      * @param sensorMode The mode to set. See the IndoorAirQualitySensorMode enum class for possible values.
+     * @param persist If true, the change will be saved to flash memory.
+     *                When persist is true, the mode setting of OutdoorAirQualitySensor and TemperatureHumiditySensor will also be persisted.
+     * 
      */
-    void setMode(IndoorAirQualitySensorMode sensorMode);
+    bool setMode(IndoorAirQualitySensorMode sensorMode, bool persist);
 
     /**
      * @brief Get the mode as a string. 
@@ -136,10 +138,12 @@ public:
 
     /**
      * @brief Set the sensor enabled or disabled.
-     * Call persistSettings() on NiclaSenseEnv instance after changing the enabled state to make the change persistent.
+     * When the sensor is enabled after being disabled, the sensor will go back to the indoorAirQuality mode.
      * @param isEnabled True to enable the sensor, false to disable it.
+     * @param persist If true, the change will be saved to flash memory.
+     *                When persist is true, the mode setting of IndoorAirQualitySensor and TemperatureHumiditySensor will also be persisted.
      */
-    void setEnabled(bool isEnabled);
+    bool setEnabled(bool isEnabled, bool persist = false);
 };
 
 #endif

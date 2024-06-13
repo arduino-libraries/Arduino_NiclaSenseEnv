@@ -60,10 +60,12 @@ public:
     /**
      * @brief Sets the enabled state of the temperature and humidity sensor.
      * When disabled the sensor goes in power down mode.
-     * Call persistSettings() on NiclaSenseEnv instance after changing the enabled state to make the change persistent.
+     * When `persist` is true, the mode setting of IndoorAirQualitySensor and OutdoorAirQualitySensor will also be persisted.
      * @param enabled The desired enabled state. True to enable the sensor, false to disable it.
+     * @param persist If true, the change will be saved to flash memory.
+     * @return true if the operation was successful, false otherwise.
      */
-    void setEnabled(bool enabled);
+    bool setEnabled(bool enabled, bool persist = false);
 };
 
 #endif

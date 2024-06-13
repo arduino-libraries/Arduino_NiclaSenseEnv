@@ -5,34 +5,36 @@ RGBLED::RGBLED(TwoWire& bus, uint8_t deviceAddress) : I2CDevice(bus, deviceAddre
 
 RGBLED::RGBLED(uint8_t deviceAddress) : I2CDevice(deviceAddress) {}
 
-void RGBLED::enableIndoorAirQualityStatus() {
-    enableIndoorAirQualityStatus(255);  // Default maximum brightness
+bool RGBLED::enableIndoorAirQualityStatus(uint8_t brightness, bool persist) {
+    return setColor(0, 0, 0, brightness, persist);
 }
 
-void RGBLED::enableIndoorAirQualityStatus(uint8_t brightness) {
-    writeToRegister(RGB_LED_RED_REGISTER_INFO, 0);
-    writeToRegister(RGB_LED_GREEN_REGISTER_INFO, 0);
-    writeToRegister(RGB_LED_BLUE_REGISTER_INFO, 0);
-    writeToRegister(INTENSITY_REGISTER_INFO, brightness);
+bool RGBLED::setColor(uint8_t r, uint8_t g, uint8_t b, bool persist) {
+    return setColor(r, g, b, 255, persist);  // Default maximum brightness
 }
 
-void RGBLED::setColor(uint8_t r, uint8_t g, uint8_t b) {
-    setColor(r, g, b, 255);  // Default maximum brightness
+bool RGBLED::setColor(uint8_t r, uint8_t g, uint8_t b, uint8_t brightness, bool persist) {
+    if(!writeToRegister(RGB_LED_RED_REGISTER_INFO, r)) return false;
+    if(!writeToRegister(RGB_LED_GREEN_REGISTER_INFO, g)) return false;
+    if(!writeToRegister(RGB_LED_BLUE_REGISTER_INFO, b)) return false;
+    if(!writeToRegister(INTENSITY_REGISTER_INFO, brightness)) return false;
+
+    if (persist) {
+        return persistRegister(RGB_LED_RED_REGISTER_INFO) &&
+               persistRegister(RGB_LED_GREEN_REGISTER_INFO) &&
+               persistRegister(RGB_LED_BLUE_REGISTER_INFO) &&
+               persistRegister(INTENSITY_REGISTER_INFO);
+    }
+
+    return true;
 }
 
-void RGBLED::setColor(uint8_t r, uint8_t g, uint8_t b, uint8_t brightness) {
-    writeToRegister(RGB_LED_RED_REGISTER_INFO, r);
-    writeToRegister(RGB_LED_GREEN_REGISTER_INFO, g);
-    writeToRegister(RGB_LED_BLUE_REGISTER_INFO, b);
-    writeToRegister(INTENSITY_REGISTER_INFO, brightness);
+bool RGBLED::setColor(Color color, bool persist) {
+    return setColor(color, 255, persist);  // Default maximum brightness
 }
 
-void RGBLED::setColor(Color color) {
-    setColor(color, 255);  // Default maximum brightness
-}
-
-void RGBLED::setColor(Color color, uint8_t brightness) {
-    setColor(color.red, color.green, color.blue, brightness);
+bool RGBLED::setColor(Color color, uint8_t brightness, bool persist) {
+    return setColor(color.red, color.green, color.blue, brightness, persist);
 }
 
 Color RGBLED::color() {
@@ -46,6 +48,12 @@ uint8_t RGBLED::brightness() {
     return readFromRegister<uint8_t>(INTENSITY_REGISTER_INFO);
 }
 
-void RGBLED::setBrightness(uint8_t brightness) {
-    writeToRegister(INTENSITY_REGISTER_INFO, brightness);
+bool RGBLED::setBrightness(uint8_t brightness, bool persist) {
+    if(!writeToRegister(INTENSITY_REGISTER_INFO, brightness)) return false;
+
+    if (persist) {
+        return persistRegister(INTENSITY_REGISTER_INFO);
+    }
+
+    return true;
 }

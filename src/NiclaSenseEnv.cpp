@@ -152,7 +152,7 @@ int NiclaSenseEnv::UARTBaudRate() {
     return baudRateMap[uartControlRegisterData];
 }
 
-void NiclaSenseEnv::setUARTBaudRate(int baudRate) {
+bool NiclaSenseEnv::setUARTBaudRate(int baudRate, bool persist) {
     int baudRateIndex = baudRateNativeValue(baudRate);
     if (baudRateIndex == -1) {
         return; // Baud rate not found
@@ -162,7 +162,15 @@ void NiclaSenseEnv::setUARTBaudRate(int baudRate) {
     if ((uartControlRegisterData & 7) == baudRateIndex) {
         return; // Value is already the same
     }
-    writeToRegister(UART_CONTROL_REGISTER_INFO, (uartControlRegisterData & ~7) | baudRateIndex);
+    if(!writeToRegister(UART_CONTROL_REGISTER_INFO, (uartControlRegisterData & ~7) | baudRateIndex)){
+        return false;
+    }
+
+    if (persist) {
+        return persistRegister(UART_CONTROL_REGISTER_INFO);
+    }
+
+    return true;
 }
 
 bool NiclaSenseEnv::isUARTCSVOutputEnabled() {
@@ -170,12 +178,20 @@ bool NiclaSenseEnv::isUARTCSVOutputEnabled() {
     return (boardControlRegisterData & (1 << 1)) != 0;
 }
 
-void NiclaSenseEnv::setUARTCSVOutputEnabled(bool enabled) {
+bool NiclaSenseEnv::setUARTCSVOutputEnabled(bool enabled, bool persist) {
     uint8_t boardControlRegisterData = readFromRegister<uint8_t>(CONTROL_REGISTER_INFO);
     if ((boardControlRegisterData & 2) == static_cast<int>(enabled)) {
         return; // Value is already the same
     }
-    writeToRegister(CONTROL_REGISTER_INFO, (boardControlRegisterData & ~2) | (enabled << 1));
+    if(!writeToRegister(CONTROL_REGISTER_INFO, (boardControlRegisterData & ~2) | (enabled << 1))){
+        return false;
+    }
+
+    if (persist) {
+        return persistRegister(CONTROL_REGISTER_INFO);
+    }
+
+    return true;
 }
 
 char NiclaSenseEnv::CSVDelimiter() {
@@ -183,7 +199,7 @@ char NiclaSenseEnv::CSVDelimiter() {
     return static_cast<char>(csvDelimiterRegisterData);
 }
 
-void NiclaSenseEnv::setCSVDelimiter(char delimiter) {
+bool NiclaSenseEnv::setCSVDelimiter(char delimiter, bool persist) {
     char currentDelimiter = CSVDelimiter();
     if (currentDelimiter == delimiter) {
         return; // Value is already the same
@@ -199,7 +215,15 @@ void NiclaSenseEnv::setCSVDelimiter(char delimiter) {
     }
 
     // Use ASCII code of the delimiter character
-    writeToRegister(CSV_DELIMITER_REGISTER_INFO, static_cast<uint8_t>(delimiter));
+    if(!writeToRegister(CSV_DELIMITER_REGISTER_INFO, static_cast<uint8_t>(delimiter))){
+        return false;
+    }
+
+    if (persist) {
+        return persistRegister(CSV_DELIMITER_REGISTER_INFO);
+    }
+
+    return true;
 }
 
 bool NiclaSenseEnv::isDebuggingEnabled() {
@@ -207,15 +231,23 @@ bool NiclaSenseEnv::isDebuggingEnabled() {
     return (boardControlRegisterData & 1) != 0;
 }
 
-void NiclaSenseEnv::setDebuggingEnabled(bool enabled) {
+bool NiclaSenseEnv::setDebuggingEnabled(bool enabled, bool persist) {
     uint8_t boardControlRegisterData = readFromRegister<uint8_t>(CONTROL_REGISTER_INFO);
     if ((boardControlRegisterData & 1) == static_cast<int>(enabled)) {
         return; // Value is already the same
     }
-    writeToRegister(CONTROL_REGISTER_INFO, (boardControlRegisterData & ~1) | enabled);
+    if(!writeToRegister(CONTROL_REGISTER_INFO, (boardControlRegisterData & ~1) | enabled)){
+        return false;
+    }
+
+    if(persist){
+        return persistRegister(CONTROL_REGISTER_INFO);
+    }
+
+    return true;
 }
 
-void NiclaSenseEnv::setDeviceAddress(int address) {
+bool NiclaSenseEnv::setDeviceAddress(int address, bool persist) {
     if (address < 0 || address > 127) {
         return; // Invalid address
     }
@@ -224,9 +256,18 @@ void NiclaSenseEnv::setDeviceAddress(int address) {
     if ((addressRegisterData & 127) == address) {
         return; // Value is already the same
     }
-    writeToRegister(SLAVE_ADDRESS_REGISTER_INFO, (addressRegisterData & ~127) | address);
+    if(!writeToRegister(SLAVE_ADDRESS_REGISTER_INFO, (addressRegisterData & ~127) | address)){
+        return false;
+    }
+
     delayMicroseconds(100); // Wait for the new address to take effect
     this->i2cDeviceAddress = address;
+
+    if (persist) {
+        return persistRegister(SLAVE_ADDRESS_REGISTER_INFO);
+    }
+
+    return true;
 }
 
 // Function to get the index for a given baud rate
