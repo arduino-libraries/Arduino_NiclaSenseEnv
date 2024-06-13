@@ -740,7 +740,7 @@ uint8_t brightness()
 
 Gets the brightness of the orange LED. 
 #### Returns
-The brightness of the orange LED. Range is 0 to 63.
+The brightness of the orange LED. Range is 0 to 255.
 <hr />
 
 ### `setBrightness` <a id="class_orange_l_e_d_1af489b380c5a3ffc78ee4754f8875edd3" class="anchor"></a>
