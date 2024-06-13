@@ -26,7 +26,7 @@ public:
 
     /**
      * Gets the brightness of the orange LED.
-     * @return The brightness of the orange LED. Range is 0 to 63.
+     * @return The brightness of the orange LED. Range is 0 to 255.
      */
     uint8_t brightness();
 
