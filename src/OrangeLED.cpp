@@ -13,7 +13,7 @@ uint8_t OrangeLED::brightness() {
 
 bool OrangeLED::setBrightness(uint8_t brightness, bool persist) {
     if (brightness > 255) {
-        return; // Invalid brightness value
+        return false; // Invalid brightness value
     }
 
     uint8_t mappedBrightness = map(brightness, 0, 255, 0, 63);

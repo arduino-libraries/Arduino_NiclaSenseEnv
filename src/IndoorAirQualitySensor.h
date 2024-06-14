@@ -120,7 +120,7 @@ public:
      *                When persist is true, the mode setting of OutdoorAirQualitySensor and TemperatureHumiditySensor will also be persisted.
      * @return True if the mode was set successfully, false otherwise.
      */
-    bool setMode(IndoorAirQualitySensorMode sensorMode, bool persist);
+    bool setMode(IndoorAirQualitySensorMode sensorMode, bool persist = false);
 
     /**
      * @brief Get the mode as a string. 

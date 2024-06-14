@@ -155,12 +155,12 @@ int NiclaSenseEnv::UARTBaudRate() {
 bool NiclaSenseEnv::setUARTBaudRate(int baudRate, bool persist) {
     int baudRateIndex = baudRateNativeValue(baudRate);
     if (baudRateIndex == -1) {
-        return; // Baud rate not found
+        return false; // Baud rate not found
     }
 
     uint8_t uartControlRegisterData = readFromRegister<uint8_t>(UART_CONTROL_REGISTER_INFO);
     if ((uartControlRegisterData & 7) == baudRateIndex) {
-        return; // Value is already the same
+        return true; // Value is already the same
     }
     if(!writeToRegister(UART_CONTROL_REGISTER_INFO, (uartControlRegisterData & ~7) | baudRateIndex)){
         return false;
@@ -181,7 +181,7 @@ bool NiclaSenseEnv::isUARTCSVOutputEnabled() {
 bool NiclaSenseEnv::setUARTCSVOutputEnabled(bool enabled, bool persist) {
     uint8_t boardControlRegisterData = readFromRegister<uint8_t>(CONTROL_REGISTER_INFO);
     if ((boardControlRegisterData & 2) == static_cast<int>(enabled)) {
-        return; // Value is already the same
+        return true; // Value is already the same
     }
     if(!writeToRegister(CONTROL_REGISTER_INFO, (boardControlRegisterData & ~2) | (enabled << 1))){
         return false;
@@ -202,7 +202,7 @@ char NiclaSenseEnv::CSVDelimiter() {
 bool NiclaSenseEnv::setCSVDelimiter(char delimiter, bool persist) {
     char currentDelimiter = CSVDelimiter();
     if (currentDelimiter == delimiter) {
-        return; // Value is already the same
+        return true; // Value is already the same
     }
 
     // Define prohibited delimiters
@@ -210,7 +210,7 @@ bool NiclaSenseEnv::setCSVDelimiter(char delimiter, bool persist) {
 
     for (auto prohibitedDelimiter : prohibitedDelimiters) {
         if (delimiter == prohibitedDelimiter) {
-            return; // Delimiter is prohibited
+            return false; // Delimiter is prohibited
         }
     }
 
@@ -234,7 +234,7 @@ bool NiclaSenseEnv::isDebuggingEnabled() {
 bool NiclaSenseEnv::setDebuggingEnabled(bool enabled, bool persist) {
     uint8_t boardControlRegisterData = readFromRegister<uint8_t>(CONTROL_REGISTER_INFO);
     if ((boardControlRegisterData & 1) == static_cast<int>(enabled)) {
-        return; // Value is already the same
+        return true; // Value is already the same
     }
     if(!writeToRegister(CONTROL_REGISTER_INFO, (boardControlRegisterData & ~1) | enabled)){
         return false;
@@ -249,12 +249,12 @@ bool NiclaSenseEnv::setDebuggingEnabled(bool enabled, bool persist) {
 
 bool NiclaSenseEnv::setDeviceAddress(int address, bool persist) {
     if (address < 0 || address > 127) {
-        return; // Invalid address
+        return false; // Invalid address
     }
     uint8_t addressRegisterData = readFromRegister<uint8_t>(SLAVE_ADDRESS_REGISTER_INFO);
     // Check bits 0 - 6
     if ((addressRegisterData & 127) == address) {
-        return; // Value is already the same
+        return true; // Value is already the same
     }
     if(!writeToRegister(SLAVE_ADDRESS_REGISTER_INFO, (addressRegisterData & ~127) | address)){
         return false;

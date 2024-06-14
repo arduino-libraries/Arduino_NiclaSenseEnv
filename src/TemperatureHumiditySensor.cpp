@@ -29,7 +29,7 @@ bool TemperatureHumiditySensor::setEnabled(bool enabled, bool persist) {
     
     // Check if current value is already the desired value
     if (static_cast<bool>(status & 1) == enabled) {
-        return;
+        return true;
     }
 
     status = enabled ? (status | 1) : (status & 0xFE);

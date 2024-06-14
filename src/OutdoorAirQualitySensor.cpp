@@ -49,7 +49,7 @@ bool OutdoorAirQualitySensor::setMode(OutdoorAirQualitySensorMode sensorMode, bo
 
     // Check if the existing value is already the same
     if ((currentRegisterData & (3 << 4)) == (mode << 4)) {
-        return;
+        return true;
     }
 
     // Overwrite bits 4 and 5 with the new value
@@ -84,7 +84,7 @@ bool OutdoorAirQualitySensor::enabled() {
 bool OutdoorAirQualitySensor::setEnabled(bool isEnabled, bool persist) {
     // Ignore the request if the sensor is already in the desired state to maintain the current mode
     if (isEnabled == enabled()) {
-        return;
+        return true;
     }
 
     auto mode = isEnabled ? OutdoorAirQualitySensorMode::outdoorAirQuality : OutdoorAirQualitySensorMode::powerDown;

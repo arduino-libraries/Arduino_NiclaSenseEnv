@@ -58,7 +58,7 @@ bool IndoorAirQualitySensor::setMode(IndoorAirQualitySensorMode sensorMode, bool
 
     // Check if the existing value is already the same
     if ((currentRegisterData & (7 << 1)) == (mode << 1)) {
-        return;
+        return true;
     }
     if(!writeToRegister(STATUS_REGISTER_INFO, (currentRegisterData & ~(7 << 1)) | (mode << 1))){
         return false;
@@ -95,7 +95,7 @@ bool IndoorAirQualitySensor::enabled() {
 
 bool IndoorAirQualitySensor::setEnabled(bool isEnabled, bool persist) {
     if (isEnabled == enabled()) {
-        return;
+        return true;
     }
 
     auto mode = isEnabled ? IndoorAirQualitySensorMode::indoorAirQuality : IndoorAirQualitySensorMode::powerDown;

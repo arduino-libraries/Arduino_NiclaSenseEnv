@@ -52,22 +52,9 @@ public:
      * @param g The green value (0-255).
      * @param b The blue value (0-255).
      * @param persist If true, the change will be saved to flash memory.
-     *                When persist is True, the brightness will also be persisted.
      * @return True if the color was set successfully, false otherwise.
      */
     bool setColor(uint8_t r, uint8_t g, uint8_t b, bool persist = false);
-
-    /**
-     * Sets the RGB values of the LED along with the specified brightness.
-     * @param r The red value (0-255).
-     * @param g The green value (0-255).
-     * @param b The blue value (0-255).
-     * @param brightness The brightness value (0-255).
-     * @param persist If true, the change will be saved to flash memory.
-     *                When persist is True, the brightness will also be persisted.
-     * @return True if the color was set successfully, false otherwise.
-     */
-    bool setColor(uint8_t r, uint8_t g, uint8_t b, uint8_t brightness, bool persist = false); ;
 
     /**
      * @brief Sets the RGB color of the LED using a Color object.
@@ -75,20 +62,9 @@ public:
      * Note: A value of 0, 0, 0 will set the color based on the IAQ value from the Indoor Air Quality sensor.
      * @param color The RGB color to set.
      * @param persist If true, the change will be saved to flash memory.
-     *                When persist is True, the brightness will also be persisted.
      * @return True if the color was set successfully, false otherwise.
      */
     bool setColor(Color color, bool persist = false);
-
-    /**
-     * @brief Sets the RGB color and brightness of the LED using a Color object.
-     * @param color The desired RGB color.
-     * @param brightness The desired brightness level (0-255).
-     * @param persist If true, the change will be saved to flash memory.
-     *                When persist is True, the brightness will also be persisted.
-     * @return True if the color was set successfully, false otherwise.
-     */
-    bool setColor(Color color, uint8_t brightness, bool persist = false);
 
     /**
      * @brief Gets the current RGB color of the LED.

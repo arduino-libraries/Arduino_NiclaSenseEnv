@@ -6,35 +6,25 @@ RGBLED::RGBLED(TwoWire& bus, uint8_t deviceAddress) : I2CDevice(bus, deviceAddre
 RGBLED::RGBLED(uint8_t deviceAddress) : I2CDevice(deviceAddress) {}
 
 bool RGBLED::enableIndoorAirQualityStatus(uint8_t brightness, bool persist) {
-    return setColor(0, 0, 0, brightness, persist);
+    return setColor(0, 0, 0, persist) && setBrightness(brightness, persist);
 }
 
 bool RGBLED::setColor(uint8_t r, uint8_t g, uint8_t b, bool persist) {
-    return setColor(r, g, b, 255, persist);  // Default maximum brightness
-}
-
-bool RGBLED::setColor(uint8_t r, uint8_t g, uint8_t b, uint8_t brightness, bool persist) {
     if(!writeToRegister(RGB_LED_RED_REGISTER_INFO, r)) return false;
     if(!writeToRegister(RGB_LED_GREEN_REGISTER_INFO, g)) return false;
     if(!writeToRegister(RGB_LED_BLUE_REGISTER_INFO, b)) return false;
-    if(!writeToRegister(INTENSITY_REGISTER_INFO, brightness)) return false;
 
     if (persist) {
         return persistRegister(RGB_LED_RED_REGISTER_INFO) &&
                persistRegister(RGB_LED_GREEN_REGISTER_INFO) &&
-               persistRegister(RGB_LED_BLUE_REGISTER_INFO) &&
-               persistRegister(INTENSITY_REGISTER_INFO);
+               persistRegister(RGB_LED_BLUE_REGISTER_INFO);
     }
 
     return true;
 }
 
 bool RGBLED::setColor(Color color, bool persist) {
-    return setColor(color, 255, persist);  // Default maximum brightness
-}
-
-bool RGBLED::setColor(Color color, uint8_t brightness, bool persist) {
-    return setColor(color.red, color.green, color.blue, brightness, persist);
+    return setColor(color.red, color.green, color.blue, persist);
 }
 
 Color RGBLED::color() {
