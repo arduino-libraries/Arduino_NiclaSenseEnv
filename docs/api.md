@@ -118,10 +118,10 @@ The [IndoorAirQualitySensor](#class_indoor_air_quality_sensor) class provides me
 | [`airQualityInterpreted`](#class_indoor_air_quality_sensor_1a60c0554991d417487511919ef0e1345d) | Get the interpreted air quality value. The possible values are "Very Good", "Good", "Medium", "Poor" and "Bad". |
 | [`relativeAirQuality`](#class_indoor_air_quality_sensor_1a8b2d1a5242db59cbec765fb5e07ff070) | Get the relative air quality value in percent (0 - 100%). |
 | [`mode`](#class_indoor_air_quality_sensor_1a41a6102aba04ab632f9e5af95156d6a5) | Get the mode of the [IndoorAirQualitySensor](#class_indoor_air_quality_sensor). |
-| [`setMode`](#class_indoor_air_quality_sensor_1abf024372f3d24a8e375da29d9a642524) | Set the mode of the [IndoorAirQualitySensor](#class_indoor_air_quality_sensor). Call storeSettingsInFlash() on [NiclaSenseEnv](#class_nicla_sense_env) instance after changing the mode to make the change persistent. |
+| [`setMode`](#class_indoor_air_quality_sensor_1a83f035ed7cd3aeeb8a0f5a81001b9a71) | Set the mode of the [IndoorAirQualitySensor](#class_indoor_air_quality_sensor). |
 | [`modeString`](#class_indoor_air_quality_sensor_1aa3dedfc0ec438c3dc1902cb54811afe8) | Get the mode as a string. The possible values are "powerDown", "cleaning", "indoorAirQuality", "indoorAirQualityLowPower", "sulfur" and "unknown". |
 | [`enabled`](#class_indoor_air_quality_sensor_1ae8f92df80d34f547700d3141a4f9be6e) | Check if the sensor is enabled. |
-| [`setEnabled`](#class_indoor_air_quality_sensor_1a4a9d2ef5cd95341c428fc24f99d046a6) | Set the sensor enabled or disabled. Call storeSettingsInFlash() on [NiclaSenseEnv](#class_nicla_sense_env) instance after changing the enabled state to make the change persistent. |
+| [`setEnabled`](#class_indoor_air_quality_sensor_1ab93c70ff6a5075c424f3cc9dab63e00b) | Set the sensor enabled or disabled. When the sensor is enabled after being disabled, the sensor will go back to the indoorAirQuality mode. |
 
 ## Members
 
@@ -259,13 +259,13 @@ Get the mode of the [IndoorAirQualitySensor](#class_indoor_air_quality_sensor).
 The mode of the [IndoorAirQualitySensor](#class_indoor_air_quality_sensor) as an enum value.
 <hr />
 
-### `setMode` <a id="class_indoor_air_quality_sensor_1abf024372f3d24a8e375da29d9a642524" class="anchor"></a>
+### `setMode` <a id="class_indoor_air_quality_sensor_1a83f035ed7cd3aeeb8a0f5a81001b9a71" class="anchor"></a>
 
 ```cpp
-void setMode(IndoorAirQualitySensorMode sensorMode)
+bool setMode(IndoorAirQualitySensorMode sensorMode, bool persist)
 ```
 
-Set the mode of the [IndoorAirQualitySensor](#class_indoor_air_quality_sensor). Call storeSettingsInFlash() on [NiclaSenseEnv](#class_nicla_sense_env) instance after changing the mode to make the change persistent.
+Set the mode of the [IndoorAirQualitySensor](#class_indoor_air_quality_sensor).
 
 Note on cleaning mode: The cleaning mode performs a thermal cleaning cycle of the MOx element. It can eliminate some light pollution residues from production and packaging and improves the stabilization processes in the sensor. The function heats up the sensor to allow thermal desorption and catalytic combustion of the residues. The cleaning cycle can be executed only once in the sensor lifetime and shall be started after product assembly. Please ensure cleaning was completed before power-off/reset and do not interrupt while cleaning. The cleaning procedure takes 1 minute (blocking).
 
@@ -274,7 +274,12 @@ Note on PBAQ mode: The PBAQ mode is a special mode to perform highly accurate an
 Note on low power IAQ mode: This mode offers a much lower power consumption while keeping accurate and consistent sensor readings. For more accurate readings, use the default indoor air quality mode.
 
 #### Parameters
-* `sensorMode` The mode to set. See the IndoorAirQualitySensorMode enum class for possible values.
+* `sensorMode` The mode to set. See the IndoorAirQualitySensorMode enum class for possible values. 
+
+* `persist` If true, the change will be saved to flash memory. When persist is true, the mode setting of [OutdoorAirQualitySensor](#class_outdoor_air_quality_sensor) and [TemperatureHumiditySensor](#class_temperature_humidity_sensor) will also be persisted. 
+
+#### Returns
+True if the mode was set successfully, false otherwise.
 <hr />
 
 ### `modeString` <a id="class_indoor_air_quality_sensor_1aa3dedfc0ec438c3dc1902cb54811afe8" class="anchor"></a>
@@ -301,16 +306,21 @@ Check if the sensor is enabled.
 True if the sensor is enabled, false otherwise.
 <hr />
 
-### `setEnabled` <a id="class_indoor_air_quality_sensor_1a4a9d2ef5cd95341c428fc24f99d046a6" class="anchor"></a>
+### `setEnabled` <a id="class_indoor_air_quality_sensor_1ab93c70ff6a5075c424f3cc9dab63e00b" class="anchor"></a>
 
 ```cpp
-void setEnabled(bool isEnabled)
+bool setEnabled(bool isEnabled, bool persist)
 ```
 
-Set the sensor enabled or disabled. Call storeSettingsInFlash() on [NiclaSenseEnv](#class_nicla_sense_env) instance after changing the enabled state to make the change persistent.
+Set the sensor enabled or disabled. When the sensor is enabled after being disabled, the sensor will go back to the indoorAirQuality mode.
 
 #### Parameters
-* `isEnabled` True to enable the sensor, false to disable it.
+* `isEnabled` True to enable the sensor, false to disable it. 
+
+* `persist` If true, the change will be saved to flash memory. When persist is true, the mode setting of [IndoorAirQualitySensor](#class_indoor_air_quality_sensor) and [TemperatureHumiditySensor](#class_temperature_humidity_sensor) will also be persisted. 
+
+#### Returns
+True if the the sensor was enabled successfully.
 <hr />
 
 # class `NiclaSenseEnv` <a id="class_nicla_sense_env" class="anchor"></a>
@@ -337,22 +347,22 @@ This class provides methods to interact with the device to enable and disable fe
 | [`rgbLED`](#class_nicla_sense_env_1aea2da7e61de2736756eba56b417eaa0b) | Returns the [RGBLED](#class_r_g_b_l_e_d) object to interact with the RGB LED. |
 | [`orangeLED`](#class_nicla_sense_env_1a7938bdcc03918a9900538373e0c02156) | Returns a reference to the [OrangeLED](#class_orange_l_e_d) object to interact with the orange LED. |
 | [`end`](#class_nicla_sense_env_1abba16f72b55ddfd648c8cde348eb6338) | Ends the operation of the [NiclaSenseEnv](#class_nicla_sense_env) class. |
-| [`storeSettingsInFlash`](#class_nicla_sense_env_1a907e93c5063c85f3d686fe87a0b1218b) | Writes the current configuration to the flash memory. Stores board register 0x00 … 0x0B in flash to be default after reset. |
+| [`persistSettings`](#class_nicla_sense_env_1a6f53bfdf4e8cc338b51089c393c52102) | Writes the current configuration to the flash memory. Stores board register 0x00 … 0x0B in flash to be default after reset. |
 | [`serialNumber`](#class_nicla_sense_env_1a8c580892d180c058380e6e497b36230a) | Retrieves the serial number of the device. |
 | [`productID`](#class_nicla_sense_env_1acbf78abfcf07c50fdd8c92a9bf06f206) | Gets the numeric product ID. |
 | [`softwareRevision`](#class_nicla_sense_env_1a9e3052e58371e04bf54f89d6d81762e9) | Get the software revision number. |
 | [`reset`](#class_nicla_sense_env_1a4ad8e07e0725654b41fc136064217d3b) | Performs a soft reset of the device. Changes to the configuration that were not stored in flash will be lost. |
 | [`deepSleep`](#class_nicla_sense_env_1a99862d3a542caf7f4d41737aa4bdfbfd) | Puts the device into deep sleep mode. |
-| [`restoreFactorySettings`](#class_nicla_sense_env_1a904757d188d0fb3ba666aaa843eb224d) | Restores the factory settings. This will reset among other properties the device address to the default value. See [storeSettingsInFlash()](#class_nicla_sense_env_1a907e93c5063c85f3d686fe87a0b1218b) for a complete list of properties that are affected by this method. |
+| [`restoreFactorySettings`](#class_nicla_sense_env_1a904757d188d0fb3ba666aaa843eb224d) | Restores the factory settings. This will reset among other properties the device address to the default value. See [persistSettings()](#class_nicla_sense_env_1a6f53bfdf4e8cc338b51089c393c52102) for a complete list of properties that are affected by this method. |
 | [`UARTBaudRate`](#class_nicla_sense_env_1a0f7f2b94995a62ab4cdd769135b508fb) | Get the current baud rate of the UART communication. The supported values are: 1200, 2400, 4800, 9600, 19200, 38400, 57600, 115200. |
-| [`setUARTBaudRate`](#class_nicla_sense_env_1a9c4620f3ec11015aa2434ed8f0138bb9) | Sets the baud rate for the UART communication. Call [storeSettingsInFlash()](#class_nicla_sense_env_1a907e93c5063c85f3d686fe87a0b1218b) on [NiclaSenseEnv](#class_nicla_sense_env) instance after changing the baud rate to make the change persistent. |
+| [`setUARTBaudRate`](#class_nicla_sense_env_1a79737e5057b01f00f7bcf2843effb708) | Sets the baud rate for the UART communication. |
 | [`isUARTCSVOutputEnabled`](#class_nicla_sense_env_1ad8103d2fa499f68db4f67c34c3a7258d) | Checks if UART CSV output is enabled. |
-| [`setUARTCSVOutputEnabled`](#class_nicla_sense_env_1a22cd13018904cc68a13e2e372f2d2f6e) | Sets the UART CSV output enabled or disabled. Enables or disables CSV output over UART. Call [storeSettingsInFlash()](#class_nicla_sense_env_1a907e93c5063c85f3d686fe87a0b1218b) on [NiclaSenseEnv](#class_nicla_sense_env) instance after changing the CSV output mode to make the change persistent. |
+| [`setUARTCSVOutputEnabled`](#class_nicla_sense_env_1adfbada386d88c33a6ade148127340e44) | Sets the UART CSV output enabled or disabled. Enables or disables CSV output over UART. |
 | [`CSVDelimiter`](#class_nicla_sense_env_1ade2737be2b30f054a8f8135891584d0f) | Gets the CSV delimiter character. The default value is ','. |
-| [`setCSVDelimiter`](#class_nicla_sense_env_1a7dad9db4d2fa6ee823fa7bc2eced72d2) | Sets the CSV delimiter for parsing CSV data. Call [storeSettingsInFlash()](#class_nicla_sense_env_1a907e93c5063c85f3d686fe87a0b1218b) on [NiclaSenseEnv](#class_nicla_sense_env) instance after changing the CSV delimiter to make the change persistent. |
+| [`setCSVDelimiter`](#class_nicla_sense_env_1ad36a6447de4444ff06f5ddeb7f139351) | Sets the CSV delimiter for parsing CSV data. |
 | [`isDebuggingEnabled`](#class_nicla_sense_env_1a0125ca9818f64b4fcbd014598022f360) | Checks if debugging is enabled. When debugging mode is enabled, the board will send additional debug messages over UART. |
-| [`setDebuggingEnabled`](#class_nicla_sense_env_1a1071d09132bbe6300f4105c848279e66) | Toggles the debugging mode. When debugging mode is enabled, the board will send additional debug messages over UART. Call [storeSettingsInFlash()](#class_nicla_sense_env_1a907e93c5063c85f3d686fe87a0b1218b) on [NiclaSenseEnv](#class_nicla_sense_env) instance after changing the debugging mode to make the change persistent. |
-| [`setDeviceAddress`](#class_nicla_sense_env_1a378603d19d998e08c3dc06dc2dc630bb) | Sets the I2C address of the device. Call [storeSettingsInFlash()](#class_nicla_sense_env_1a907e93c5063c85f3d686fe87a0b1218b) on [NiclaSenseEnv](#class_nicla_sense_env) instance after changing the address to make the change persistent. |
+| [`setDebuggingEnabled`](#class_nicla_sense_env_1a96d8b28ad1f50f012149c28b3a4f71f7) | Toggles the debugging mode. When debugging mode is enabled, the board will send additional debug messages over UART. |
+| [`setDeviceAddress`](#class_nicla_sense_env_1adfa69a5f5536884bbf404fed3d48c368) | Sets the I2C address of the device. |
 
 ## Members
 
@@ -463,10 +473,10 @@ Ends the operation of the [NiclaSenseEnv](#class_nicla_sense_env) class.
 This function is used to gracefully end the operation of the [NiclaSenseEnv](#class_nicla_sense_env) class. It performs any necessary cleanup to free up resources. It gets called automatically when the object is destroyed.
 <hr />
 
-### `storeSettingsInFlash` <a id="class_nicla_sense_env_1a907e93c5063c85f3d686fe87a0b1218b" class="anchor"></a>
+### `persistSettings` <a id="class_nicla_sense_env_1a6f53bfdf4e8cc338b51089c393c52102" class="anchor"></a>
 
 ```cpp
-bool storeSettingsInFlash()
+bool persistSettings()
 ```
 
 Writes the current configuration to the flash memory. Stores board register 0x00 … 0x0B in flash to be default after reset.
@@ -566,7 +576,7 @@ This function puts the device into deep sleep mode, conserving power by disablin
 bool restoreFactorySettings()
 ```
 
-Restores the factory settings. This will reset among other properties the device address to the default value. See [storeSettingsInFlash()](#class_nicla_sense_env_1a907e93c5063c85f3d686fe87a0b1218b) for a complete list of properties that are affected by this method.
+Restores the factory settings. This will reset among other properties the device address to the default value. See [persistSettings()](#class_nicla_sense_env_1a6f53bfdf4e8cc338b51089c393c52102) for a complete list of properties that are affected by this method.
 
 #### Returns
 true if the factory settings were successfully restored, false otherwise.
@@ -584,16 +594,21 @@ Get the current baud rate of the UART communication. The supported values are: 1
 int The UART Baud Rate.
 <hr />
 
-### `setUARTBaudRate` <a id="class_nicla_sense_env_1a9c4620f3ec11015aa2434ed8f0138bb9" class="anchor"></a>
+### `setUARTBaudRate` <a id="class_nicla_sense_env_1a79737e5057b01f00f7bcf2843effb708" class="anchor"></a>
 
 ```cpp
-void setUARTBaudRate(int baudRate)
+bool setUARTBaudRate(int baudRate, bool persist)
 ```
 
-Sets the baud rate for the UART communication. Call [storeSettingsInFlash()](#class_nicla_sense_env_1a907e93c5063c85f3d686fe87a0b1218b) on [NiclaSenseEnv](#class_nicla_sense_env) instance after changing the baud rate to make the change persistent.
+Sets the baud rate for the UART communication.
 
 #### Parameters
-* `baudRate` The desired baud rate for the UART communication. The supported values are: 1200, 2400, 4800, 9600, 19200, 38400, 57600, 115200
+* `baudRate` The desired baud rate for the UART communication. The supported values are: 1200, 2400, 4800, 9600, 19200, 38400, 57600, 115200 
+
+* `persist` Set to true to store the setting in flash, to false otherwise. 
+
+#### Returns
+True if the baud rate was set successfully, false otherwise.
 <hr />
 
 ### `isUARTCSVOutputEnabled` <a id="class_nicla_sense_env_1ad8103d2fa499f68db4f67c34c3a7258d" class="anchor"></a>
@@ -608,18 +623,23 @@ Checks if UART CSV output is enabled.
 true if UART CSV output is enabled, false otherwise.
 <hr />
 
-### `setUARTCSVOutputEnabled` <a id="class_nicla_sense_env_1a22cd13018904cc68a13e2e372f2d2f6e" class="anchor"></a>
+### `setUARTCSVOutputEnabled` <a id="class_nicla_sense_env_1adfbada386d88c33a6ade148127340e44" class="anchor"></a>
 
 ```cpp
-void setUARTCSVOutputEnabled(bool enabled)
+bool setUARTCSVOutputEnabled(bool enabled, bool persist)
 ```
 
-Sets the UART CSV output enabled or disabled. Enables or disables CSV output over UART. Call [storeSettingsInFlash()](#class_nicla_sense_env_1a907e93c5063c85f3d686fe87a0b1218b) on [NiclaSenseEnv](#class_nicla_sense_env) instance after changing the CSV output mode to make the change persistent.
+Sets the UART CSV output enabled or disabled. Enables or disables CSV output over UART.
 
 The column names and their order are: HS4001 sample counter, HS4001 temperature (degC), HS4001 humidity (RH), ZMOD4510 status, ZMOD4510 sample counter, ZMOD4510 EPA AQI, ZMOD4510 Fast AQI, ZMOD4510 O3 (ppb), ZMOD4510 NO2 (ppb), ZMOD4510 Rmox[0], ZMOD4510 Rmox[1], ZMOD4510 Rmox[2], ZMOD4510 Rmox[3], ZMOD4510 Rmox[4], ZMOD4510 Rmox[5], ZMOD4510 Rmox[6], ZMOD4510 Rmox[7], ZMOD4510 Rmox[8], ZMOD4510 Rmox[9], ZMOD4510 Rmox[10], ZMOD4510 Rmox[11], ZMOD4510 Rmox[12], ZMOD4410 status, ZMD4410 sample counter, ZMOD4410 IAQ, ZMOD4410 TVOC (mg/m^3), ZMOD4410 eCO2 (ppm), ZMOD4410 Rel IAQ, ZMOD4410 EtOH (ppm), ZMOD4410 Rmox[0], ZMOD4410 Rmox[1], ZMOD4410 Rmox[2], ZMOD4410 Rmox[3], ZMOD4410 Rmox[4], ZMOD4410 Rmox[5], ZMOD4410 Rmox[6], ZMOD4410 Rmox[7], ZMOD4410 Rmox[8], ZMOD4410 Rmox[9], ZMOD4410 Rmox[10], ZMOD4410 Rmox[11], ZMOD4410 Rmox[12], ZMOD4410 Rcda[0], ZMOD4410 Rcda[1], ZMOD4410 Rcda[2], ZMOD4410 Rhtr, ZMOD4410 Temp, ZMOD4410 intensity, ZMOD4410 odor The csv formatted line is sent when a sensor finishes a measurement. Only the columns for this sensor will be filled, the other columns will be empty.
 
 #### Parameters
-* `enabled` True to enable UART CSV output, false to disable.
+* `enabled` True to enable UART CSV output, false to disable. 
+
+* `persist` True to store the setting in flash, false otherwise. When set to True, it will also persist the value set via `setDebuggingEnabled`. 
+
+#### Returns
+True if the CSV output mode was set successfully, false otherwise.
 <hr />
 
 ### `CSVDelimiter` <a id="class_nicla_sense_env_1ade2737be2b30f054a8f8135891584d0f" class="anchor"></a>
@@ -634,16 +654,21 @@ Gets the CSV delimiter character. The default value is ','.
 The CSV delimiter character.
 <hr />
 
-### `setCSVDelimiter` <a id="class_nicla_sense_env_1a7dad9db4d2fa6ee823fa7bc2eced72d2" class="anchor"></a>
+### `setCSVDelimiter` <a id="class_nicla_sense_env_1ad36a6447de4444ff06f5ddeb7f139351" class="anchor"></a>
 
 ```cpp
-void setCSVDelimiter(char delimiter)
+bool setCSVDelimiter(char delimiter, bool persist)
 ```
 
-Sets the CSV delimiter for parsing CSV data. Call [storeSettingsInFlash()](#class_nicla_sense_env_1a907e93c5063c85f3d686fe87a0b1218b) on [NiclaSenseEnv](#class_nicla_sense_env) instance after changing the CSV delimiter to make the change persistent.
+Sets the CSV delimiter for parsing CSV data.
 
 #### Parameters
-* `delimiter` The character to be used as the CSV delimiter.
+* `delimiter` The character to be used as the CSV delimiter. 
+
+* `persist` If true, the change will be saved to flash memory. 
+
+#### Returns
+True if the delimiter was set successfully, false otherwise.
 <hr />
 
 ### `isDebuggingEnabled` <a id="class_nicla_sense_env_1a0125ca9818f64b4fcbd014598022f360" class="anchor"></a>
@@ -658,28 +683,38 @@ Checks if debugging is enabled. When debugging mode is enabled, the board will s
 true if debugging is enabled, false otherwise.
 <hr />
 
-### `setDebuggingEnabled` <a id="class_nicla_sense_env_1a1071d09132bbe6300f4105c848279e66" class="anchor"></a>
+### `setDebuggingEnabled` <a id="class_nicla_sense_env_1a96d8b28ad1f50f012149c28b3a4f71f7" class="anchor"></a>
 
 ```cpp
-void setDebuggingEnabled(bool enabled)
+bool setDebuggingEnabled(bool enabled, bool persist)
 ```
 
-Toggles the debugging mode. When debugging mode is enabled, the board will send additional debug messages over UART. Call [storeSettingsInFlash()](#class_nicla_sense_env_1a907e93c5063c85f3d686fe87a0b1218b) on [NiclaSenseEnv](#class_nicla_sense_env) instance after changing the debugging mode to make the change persistent.
+Toggles the debugging mode. When debugging mode is enabled, the board will send additional debug messages over UART.
 
 #### Parameters
-* `enabled` A boolean value indicating whether debugging is enabled or not.
+* `enabled` A boolean value indicating whether debugging is enabled or not. 
+
+* `persist` If true, the change will be saved to flash memory. When setting this to true the value set via `setUARTCSVOutputEnabled` will also be persisted. 
+
+#### Returns
+True if the debugging mode was set successfully, false otherwise.
 <hr />
 
-### `setDeviceAddress` <a id="class_nicla_sense_env_1a378603d19d998e08c3dc06dc2dc630bb" class="anchor"></a>
+### `setDeviceAddress` <a id="class_nicla_sense_env_1adfa69a5f5536884bbf404fed3d48c368" class="anchor"></a>
 
 ```cpp
-void setDeviceAddress(int address)
+bool setDeviceAddress(int address, bool persist)
 ```
 
-Sets the I2C address of the device. Call [storeSettingsInFlash()](#class_nicla_sense_env_1a907e93c5063c85f3d686fe87a0b1218b) on [NiclaSenseEnv](#class_nicla_sense_env) instance after changing the address to make the change persistent.
+Sets the I2C address of the device.
 
 #### Parameters
-* `address` The new I2C address. Valid values are 0 to 127.
+* `address` The new I2C address. Valid values are 0 to 127. 
+
+* `persist` If true, the change will be saved to flash memory. 
+
+#### Returns
+True if the address was set successfully, false otherwise.
 <hr />
 
 # class `OrangeLED` <a id="class_orange_l_e_d" class="anchor"></a>
@@ -700,9 +735,9 @@ The [OrangeLED](#class_orange_l_e_d) class provides methods to control the brigh
 | [`OrangeLED`](#class_orange_l_e_d_1af92a1e92f3505ff5cc30b364e142a710) | Constructs a [OrangeLED](#class_orange_l_e_d) object. |
 | [`OrangeLED`](#class_orange_l_e_d_1a31e760ce8acade6fdb3d42f4c0e2d9cd) | Constructs a [OrangeLED](#class_orange_l_e_d) object with the specified device address. |
 | [`brightness`](#class_orange_l_e_d_1a62c8337f91700b78fdfaba6ab401d080) | Gets the brightness of the orange LED.  |
-| [`setBrightness`](#class_orange_l_e_d_1af489b380c5a3ffc78ee4754f8875edd3) | Sets the brightness of the orange LED. Call storeSettingsInFlash() on [NiclaSenseEnv](#class_nicla_sense_env) instance after changing the orange LED brightness to make the change persistent.  |
-| [`errorStatusEnabled`](#class_orange_l_e_d_1a01b9f52a9cc4490df7ed2e0e59f17b71) | Determines whether the orange LED is used to indicate an error status of one of the sensors.  |
-| [`setErrorStatusEnabled`](#class_orange_l_e_d_1aac531fa45b968ca6662b3dc6f698065a) | Enables or disables the orange LED to indicate an error status of one of the sensors. Call storeSettingsInFlash() on [NiclaSenseEnv](#class_nicla_sense_env) instance after enabling/disabling the orange LED error status to make the change persistent.  |
+| [`setBrightness`](#class_orange_l_e_d_1a0bd65f00322cd251e02e8c48da95c112) | Sets the brightness of the orange LED. When persist is true, the `errorStatusEnabled` setting will also be persisted.  |
+| [`errorStatusEnabled`](#class_orange_l_e_d_1a01b9f52a9cc4490df7ed2e0e59f17b71) | Determines whether the orange LED is used to indicate an error status of one of the sensors. When a board error condition occurs the LED blinks, independently of the brightness setting.  |
+| [`setErrorStatusEnabled`](#class_orange_l_e_d_1af05da1e5e1cd5ff06f63e68d0b5a6017) | Enables or disables the orange LED to indicate an error status of one of the sensors. When persist is true, the brightness setting will also be saved to flash memory.  |
 
 ## Members
 
@@ -743,15 +778,20 @@ Gets the brightness of the orange LED.
 The brightness of the orange LED. Range is 0 to 255.
 <hr />
 
-### `setBrightness` <a id="class_orange_l_e_d_1af489b380c5a3ffc78ee4754f8875edd3" class="anchor"></a>
+### `setBrightness` <a id="class_orange_l_e_d_1a0bd65f00322cd251e02e8c48da95c112" class="anchor"></a>
 
 ```cpp
-void setBrightness(uint8_t brightness)
+bool setBrightness(uint8_t brightness, bool persist)
 ```
 
-Sets the brightness of the orange LED. Call storeSettingsInFlash() on [NiclaSenseEnv](#class_nicla_sense_env) instance after changing the orange LED brightness to make the change persistent. 
+Sets the brightness of the orange LED. When persist is true, the `errorStatusEnabled` setting will also be persisted. 
 #### Parameters
-* `brightness` : The brightness of the orange LED. Range is 0 to 63.
+* `brightness` : The brightness of the orange LED. Range is 0 to 255. 
+
+* `persist` : If true, the brightness setting will be saved to flash memory. 
+
+#### Returns
+True if the brightness was set successfully, false otherwise.
 <hr />
 
 ### `errorStatusEnabled` <a id="class_orange_l_e_d_1a01b9f52a9cc4490df7ed2e0e59f17b71" class="anchor"></a>
@@ -760,20 +800,25 @@ Sets the brightness of the orange LED. Call storeSettingsInFlash() on [NiclaSens
 bool errorStatusEnabled()
 ```
 
-Determines whether the orange LED is used to indicate an error status of one of the sensors. 
+Determines whether the orange LED is used to indicate an error status of one of the sensors. When a board error condition occurs the LED blinks, independently of the brightness setting. 
 #### Returns
 True if the orange LED is used for error status, false otherwise.
 <hr />
 
-### `setErrorStatusEnabled` <a id="class_orange_l_e_d_1aac531fa45b968ca6662b3dc6f698065a" class="anchor"></a>
+### `setErrorStatusEnabled` <a id="class_orange_l_e_d_1af05da1e5e1cd5ff06f63e68d0b5a6017" class="anchor"></a>
 
 ```cpp
-void setErrorStatusEnabled(bool enabled)
+bool setErrorStatusEnabled(bool enabled, bool persist)
 ```
 
-Enables or disables the orange LED to indicate an error status of one of the sensors. Call storeSettingsInFlash() on [NiclaSenseEnv](#class_nicla_sense_env) instance after enabling/disabling the orange LED error status to make the change persistent. 
+Enables or disables the orange LED to indicate an error status of one of the sensors. When persist is true, the brightness setting will also be saved to flash memory. 
 #### Parameters
-* `enabled` : Whether to enable or disable the orange LED error status.
+* `enabled` : Whether to enable or disable the orange LED error status. 
+
+* `persist` : If true, the change will be saved to flash memory. 
+
+#### Returns
+True if the mode was set successfully, false otherwise.
 <hr />
 
 # class `OutdoorAirQualitySensor` <a id="class_outdoor_air_quality_sensor" class="anchor"></a>
@@ -799,10 +844,10 @@ This class provides functionality to interact with an outdoor air quality sensor
 | [`NO2`](#class_outdoor_air_quality_sensor_1ae43fb5d16f458cc40389a7a0bc8e0a94) | Get the NO2 value from the outdoor air quality sensor. |
 | [`O3`](#class_outdoor_air_quality_sensor_1a58bba1f61d09a835619d6ebfa7dc90d2) | Get the O3 value from the outdoor air quality sensor. |
 | [`mode`](#class_outdoor_air_quality_sensor_1ab75dff205e511781b3608c890d982a51) | Get the mode of the outdoor air quality sensor. Possible values are: powerDown, cleaning, outdoorAirQuality. The default mode is powerDown. This is because the sensor needs several hours to start outputting valuable data due to the sensor's internal algorithm and chemical compound. This property represents the numeric value of the mode. See OutdoorAirQualitySensorMode for more information. |
-| [`setMode`](#class_outdoor_air_quality_sensor_1a43e4be8a3103e23347a338808cebf18a) | Sets the mode of the outdoor air quality sensor. |
+| [`setMode`](#class_outdoor_air_quality_sensor_1aaf6631c57808d0a3020d0db2357cb41e) | Sets the mode of the outdoor air quality sensor. |
 | [`modeString`](#class_outdoor_air_quality_sensor_1a565d3198430da683ed037d268d2d02f8) | Gets the outdoor air quality sensor mode as a string. |
 | [`enabled`](#class_outdoor_air_quality_sensor_1a6e02cc3c01e8d7725c0f104890323f19) | Checks if the outdoor air quality sensor is enabled. |
-| [`setEnabled`](#class_outdoor_air_quality_sensor_1a323966ea8a1d524afb1317a398f41d8a) | Sets the enabled state of the outdoor air quality sensor. When disabled the sensor goes in power down mode. Call storeSettingsInFlash() on [NiclaSenseEnv](#class_nicla_sense_env) instance after changing the enabled state to make the change persistent. |
+| [`setEnabled`](#class_outdoor_air_quality_sensor_1a9597a02011152347af8c4a6c9ee7b97d) | Sets the enabled state of the outdoor air quality sensor. When disabled the sensor goes in power down mode. When the sensor is enabled after being disabled, the sensor will go back to the outdoorAirQuality mode. |
 
 ## Members
 
@@ -904,20 +949,25 @@ Get the mode of the outdoor air quality sensor. Possible values are: powerDown, 
 OutdoorAirQualitySensorMode The mode of the sensor.
 <hr />
 
-### `setMode` <a id="class_outdoor_air_quality_sensor_1a43e4be8a3103e23347a338808cebf18a" class="anchor"></a>
+### `setMode` <a id="class_outdoor_air_quality_sensor_1aaf6631c57808d0a3020d0db2357cb41e" class="anchor"></a>
 
 ```cpp
-void setMode(OutdoorAirQualitySensorMode sensorMode)
+bool setMode(OutdoorAirQualitySensorMode sensorMode, bool persist)
 ```
 
 Sets the mode of the outdoor air quality sensor.
 
-This function allows you to set the mode of the outdoor air quality sensor. Possible values are: powerDown, cleaning, outdoorAirQuality. See OutdoorAirQualitySensorMode for more information. Call storeSettingsInFlash() on [NiclaSenseEnv](#class_nicla_sense_env) instance after changing the mode to make the change persistent.
+This function allows you to set the mode of the outdoor air quality sensor. Possible values are: powerDown, cleaning, outdoorAirQuality. See OutdoorAirQualitySensorMode for more information.
 
 Note on cleaning mode: The cleaning mode performs a thermal cleaning cycle of the MOx element. It can eliminate some light pollution residues from production and packaging and improves the stabilization processes in the sensor. The function heats up the sensor to allow thermal desorption and catalytic combustion of the residues. The cleaning cycle can be executed only once in the sensor lifetime and shall be started after product assembly. Please ensure cleaning was completed before power-off/reset and do not interrupt while cleaning. The cleaning procedure takes 1 minute (blocking).
 
 #### Parameters
-* `sensorMode` The mode to set for the sensor.
+* `sensorMode` The mode to set for the sensor. 
+
+* `persist` If true, the change will be saved to flash memory. When persist is true, the mode setting of [IndoorAirQualitySensor](#class_indoor_air_quality_sensor) and [TemperatureHumiditySensor](#class_temperature_humidity_sensor) will also be persisted. 
+
+#### Returns
+True if the mode was set successfully, false otherwise.
 <hr />
 
 ### `modeString` <a id="class_outdoor_air_quality_sensor_1a565d3198430da683ed037d268d2d02f8" class="anchor"></a>
@@ -944,16 +994,21 @@ Checks if the outdoor air quality sensor is enabled.
 true if the sensor is enabled, false otherwise.
 <hr />
 
-### `setEnabled` <a id="class_outdoor_air_quality_sensor_1a323966ea8a1d524afb1317a398f41d8a" class="anchor"></a>
+### `setEnabled` <a id="class_outdoor_air_quality_sensor_1a9597a02011152347af8c4a6c9ee7b97d" class="anchor"></a>
 
 ```cpp
-void setEnabled(bool isEnabled)
+bool setEnabled(bool isEnabled, bool persist)
 ```
 
-Sets the enabled state of the outdoor air quality sensor. When disabled the sensor goes in power down mode. Call storeSettingsInFlash() on [NiclaSenseEnv](#class_nicla_sense_env) instance after changing the enabled state to make the change persistent.
+Sets the enabled state of the outdoor air quality sensor. When disabled the sensor goes in power down mode. When the sensor is enabled after being disabled, the sensor will go back to the outdoorAirQuality mode.
 
 #### Parameters
-* `isEnabled` True to enable the sensor, false to disable it.
+* `isEnabled` True to enable the sensor, false to disable it. 
+
+* `persist` If true, the change will be saved to flash memory. When persist is true, the mode setting of [IndoorAirQualitySensor](#class_indoor_air_quality_sensor) and [TemperatureHumiditySensor](#class_temperature_humidity_sensor) will also be persisted. 
+
+#### Returns
+True if the enabled state was set successfully, false otherwise.
 <hr />
 
 # class `RGBLED` <a id="class_r_g_b_l_e_d" class="anchor"></a>
@@ -973,15 +1028,12 @@ The [RGBLED](#class_r_g_b_l_e_d) class provides methods to control the color and
 --------------------------------|---------------------------------------------
 | [`RGBLED`](#class_r_g_b_l_e_d_1aad82d7f79dc58ed0a9411cef254dafad) | Constructs an instance of the [RGBLED](#class_r_g_b_l_e_d) class. |
 | [`RGBLED`](#class_r_g_b_l_e_d_1a350a112613fac1242743e4b1de07a057) | Initializes an instance of the [RGBLED](#class_r_g_b_l_e_d) class with the specified device address. |
-| [`enableIndoorAirQualityStatus`](#class_r_g_b_l_e_d_1a9362379adae653296ad0f8c38e306b5f) | Enables the indoor air quality status feature on the RGB LED. When enabled, the RGB LED will change color based on the air quality (red = bad, green = good) |
-| [`enableIndoorAirQualityStatus`](#class_r_g_b_l_e_d_1a3a29524698bb1456f0f3dab6eca235e5) | Enables the indoor air quality status indicator on the RGB LED. When enabled, the RGB LED will change color based on the air quality (red = bad, green = good) Call storeSettingsInFlash() on [NiclaSenseEnv](#class_nicla_sense_env) instance after enabling the indoor air quality status to make the change persistent.  |
-| [`setColor`](#class_r_g_b_l_e_d_1a563442bfa57a5246f35c0125eed98b35) | Sets the RGB values of the LED. |
-| [`setColor`](#class_r_g_b_l_e_d_1a86d66d9e7dcbe8d22cf28cf882555b89) | Sets the RGB values of the LED along with the specified brightness. Call storeSettingsInFlash() on [NiclaSenseEnv](#class_nicla_sense_env) instance after changing the color to make the change persistent.  |
-| [`setColor`](#class_r_g_b_l_e_d_1a3efd22eb73adb5be9c93447e583c4818) | Sets the RGB color of the LED using a [Color](#struct_color) object. The [Color](#struct_color) object contains the red, green, and blue values that can be changed individually. Call storeSettingsInFlash() on [NiclaSenseEnv](#class_nicla_sense_env) instance after changing the color to make the change persistent. |
-| [`setColor`](#class_r_g_b_l_e_d_1a7ba4ef38ebe40039dc44a26c7d59c3d0) | Sets the RGB color and brightness of the LED using a [Color](#struct_color) object. Call Call storeSettingsInFlash() on [NiclaSenseEnv](#class_nicla_sense_env) instance after changing the color / brightness to make the change persistent. |
+| [`enableIndoorAirQualityStatus`](#class_r_g_b_l_e_d_1aa6fbd29854537566dee74d73875615c6) | Enables the indoor air quality status indicator on the RGB LED. When enabled, the RGB LED will change color based on the air quality (red = bad, green = good)  |
+| [`setColor`](#class_r_g_b_l_e_d_1a04058a97af30f3eb3836f7dd1eeb1c01) | Sets the RGB values of the LED. |
+| [`setColor`](#class_r_g_b_l_e_d_1ac5fff451e2e16b7498917fbe02134adb) | Sets the RGB color of the LED using a [Color](#struct_color) object. The [Color](#struct_color) object contains the red, green, and blue values that can be changed individually. Note: A value of 0, 0, 0 will set the color based on the IAQ value from the Indoor Air Quality sensor. |
 | [`color`](#class_r_g_b_l_e_d_1a6ce467b464540233311718ac5055e7bc) | Gets the current RGB color of the LED. |
 | [`brightness`](#class_r_g_b_l_e_d_1ae0d4a3a49a797220fe19ee70e8f3ec67) | Get the brightness of the RGB LED (0-255) |
-| [`setBrightness`](#class_r_g_b_l_e_d_1a5b2ca545d256e92cc28698d14c16d9c3) | Sets the brightness of the RGB LED. This function allows you to adjust the brightness of the RGB LED. Call storeSettingsInFlash() on [NiclaSenseEnv](#class_nicla_sense_env) instance after changing the brightness to make the change persistent. |
+| [`setBrightness`](#class_r_g_b_l_e_d_1a72dd5b87e665205ca86de73a193ce42f) | Sets the brightness of the RGB LED. This function allows you to adjust the brightness of the RGB LED. |
 
 ## Members
 
@@ -1011,50 +1063,31 @@ Initializes an instance of the [RGBLED](#class_r_g_b_l_e_d) class with the speci
 * `deviceAddress` The address of the RGB LED device.
 <hr />
 
-### `enableIndoorAirQualityStatus` <a id="class_r_g_b_l_e_d_1a9362379adae653296ad0f8c38e306b5f" class="anchor"></a>
+### `enableIndoorAirQualityStatus` <a id="class_r_g_b_l_e_d_1aa6fbd29854537566dee74d73875615c6" class="anchor"></a>
 
 ```cpp
-void enableIndoorAirQualityStatus()
+bool enableIndoorAirQualityStatus(uint8_t brightness, bool persist)
 ```
 
-Enables the indoor air quality status feature on the RGB LED. When enabled, the RGB LED will change color based on the air quality (red = bad, green = good)
-<hr />
-
-### `enableIndoorAirQualityStatus` <a id="class_r_g_b_l_e_d_1a3a29524698bb1456f0f3dab6eca235e5" class="anchor"></a>
-
-```cpp
-void enableIndoorAirQualityStatus(uint8_t brightness)
-```
-
-Enables the indoor air quality status indicator on the RGB LED. When enabled, the RGB LED will change color based on the air quality (red = bad, green = good) Call storeSettingsInFlash() on [NiclaSenseEnv](#class_nicla_sense_env) instance after enabling the indoor air quality status to make the change persistent. 
+Enables the indoor air quality status indicator on the RGB LED. When enabled, the RGB LED will change color based on the air quality (red = bad, green = good) 
 #### Parameters
-* `brightness` The brightness level of the indicator (0-255).
+* `brightness` The brightness level of the indicator (0-255). 
+
+* `persist` If true, the change will be saved to flash memory. When persist is True, the brightness will also be persisted. 
+
+#### Returns
+True if the mode was set successfully, false otherwise.
 <hr />
 
-### `setColor` <a id="class_r_g_b_l_e_d_1a563442bfa57a5246f35c0125eed98b35" class="anchor"></a>
+### `setColor` <a id="class_r_g_b_l_e_d_1a04058a97af30f3eb3836f7dd1eeb1c01" class="anchor"></a>
 
 ```cpp
-void setColor(uint8_t r, uint8_t g, uint8_t b)
+bool setColor(uint8_t r, uint8_t g, uint8_t b, bool persist)
 ```
 
 Sets the RGB values of the LED.
 
-This function sets the red, green, and blue values of the LED using individual values. Call storeSettingsInFlash() on [NiclaSenseEnv](#class_nicla_sense_env) instance after changing the color to make the change persistent. 
-#### Parameters
-* `r` The red value (0-255). 
-
-* `g` The green value (0-255). 
-
-* `b` The blue value (0-255).
-<hr />
-
-### `setColor` <a id="class_r_g_b_l_e_d_1a86d66d9e7dcbe8d22cf28cf882555b89" class="anchor"></a>
-
-```cpp
-void setColor(uint8_t r, uint8_t g, uint8_t b, uint8_t brightness)
-```
-
-Sets the RGB values of the LED along with the specified brightness. Call storeSettingsInFlash() on [NiclaSenseEnv](#class_nicla_sense_env) instance after changing the color to make the change persistent. 
+This function sets the red, green, and blue values of the LED using individual values. Note: A value of 0, 0, 0 will set the color based on the IAQ value from the Indoor Air Quality sensor. 
 #### Parameters
 * `r` The red value (0-255). 
 
@@ -1062,33 +1095,27 @@ Sets the RGB values of the LED along with the specified brightness. Call storeSe
 
 * `b` The blue value (0-255). 
 
-* `brightness` The brightness value (0-255).
+* `persist` If true, the change will be saved to flash memory. 
+
+#### Returns
+True if the color was set successfully, false otherwise.
 <hr />
 
-### `setColor` <a id="class_r_g_b_l_e_d_1a3efd22eb73adb5be9c93447e583c4818" class="anchor"></a>
+### `setColor` <a id="class_r_g_b_l_e_d_1ac5fff451e2e16b7498917fbe02134adb" class="anchor"></a>
 
 ```cpp
-void setColor( Color color)
+bool setColor( Color color, bool persist)
 ```
 
-Sets the RGB color of the LED using a [Color](#struct_color) object. The [Color](#struct_color) object contains the red, green, and blue values that can be changed individually. Call storeSettingsInFlash() on [NiclaSenseEnv](#class_nicla_sense_env) instance after changing the color to make the change persistent.
+Sets the RGB color of the LED using a [Color](#struct_color) object. The [Color](#struct_color) object contains the red, green, and blue values that can be changed individually. Note: A value of 0, 0, 0 will set the color based on the IAQ value from the Indoor Air Quality sensor.
 
 #### Parameters
-* `color` The RGB color to set.
-<hr />
+* `color` The RGB color to set. 
 
-### `setColor` <a id="class_r_g_b_l_e_d_1a7ba4ef38ebe40039dc44a26c7d59c3d0" class="anchor"></a>
+* `persist` If true, the change will be saved to flash memory. 
 
-```cpp
-void setColor( Color color, uint8_t brightness)
-```
-
-Sets the RGB color and brightness of the LED using a [Color](#struct_color) object. Call Call storeSettingsInFlash() on [NiclaSenseEnv](#class_nicla_sense_env) instance after changing the color / brightness to make the change persistent.
-
-#### Parameters
-* `color` The desired RGB color. 
-
-* `brightness` The desired brightness level (0-255).
+#### Returns
+True if the color was set successfully, false otherwise.
 <hr />
 
 ### `color` <a id="class_r_g_b_l_e_d_1a6ce467b464540233311718ac5055e7bc" class="anchor"></a>
@@ -1115,16 +1142,21 @@ Get the brightness of the RGB LED (0-255)
 The brightness value as a uint8_t.
 <hr />
 
-### `setBrightness` <a id="class_r_g_b_l_e_d_1a5b2ca545d256e92cc28698d14c16d9c3" class="anchor"></a>
+### `setBrightness` <a id="class_r_g_b_l_e_d_1a72dd5b87e665205ca86de73a193ce42f" class="anchor"></a>
 
 ```cpp
-void setBrightness(uint8_t brightness)
+bool setBrightness(uint8_t brightness, bool persist)
 ```
 
-Sets the brightness of the RGB LED. This function allows you to adjust the brightness of the RGB LED. Call storeSettingsInFlash() on [NiclaSenseEnv](#class_nicla_sense_env) instance after changing the brightness to make the change persistent.
+Sets the brightness of the RGB LED. This function allows you to adjust the brightness of the RGB LED.
 
 #### Parameters
-* `brightness` The brightness level to set (0-255).
+* `brightness` The brightness level to set (0-255). 
+
+* `persist` If true, the change will be saved to flash memory. 
+
+#### Returns
+True if the brightness was set successfully, false otherwise.
 <hr />
 
 # class `TemperatureHumiditySensor` <a id="class_temperature_humidity_sensor" class="anchor"></a>
@@ -1147,7 +1179,7 @@ This class provides methods to interact with a temperature and humidity sensor c
 | [`temperature`](#class_temperature_humidity_sensor_1a2af4c91ac63927fbfc4f230aa3407a90) | Get the temperature value from the sensor in degrees Celsius. |
 | [`humidity`](#class_temperature_humidity_sensor_1a5a0dc24688dbc874eed38f0f486150b1) | Get the relative humidity value (Range 0-100%). |
 | [`enabled`](#class_temperature_humidity_sensor_1ac4f4a00cc2fd8a2d58c47cbca1ac7533) | Checks if the temperature and humidity sensor is enabled. |
-| [`setEnabled`](#class_temperature_humidity_sensor_1a40fd104edbe482fcbc060eeb069cb60a) | Sets the enabled state of the temperature and humidity sensor. When disabled the sensor goes in power down mode. Call storeSettingsInFlash() on [NiclaSenseEnv](#class_nicla_sense_env) instance after changing the enabled state to make the change persistent. |
+| [`setEnabled`](#class_temperature_humidity_sensor_1a093f3e5dc45279ffdab11b85c417080d) | Sets the enabled state of the temperature and humidity sensor. When disabled the sensor goes in power down mode. When `persist` is true, the mode setting of [IndoorAirQualitySensor](#class_indoor_air_quality_sensor) and [OutdoorAirQualitySensor](#class_outdoor_air_quality_sensor) will also be persisted. |
 
 ## Members
 
@@ -1213,16 +1245,21 @@ Checks if the temperature and humidity sensor is enabled.
 true if the sensor is enabled, false otherwise.
 <hr />
 
-### `setEnabled` <a id="class_temperature_humidity_sensor_1a40fd104edbe482fcbc060eeb069cb60a" class="anchor"></a>
+### `setEnabled` <a id="class_temperature_humidity_sensor_1a093f3e5dc45279ffdab11b85c417080d" class="anchor"></a>
 
 ```cpp
-void setEnabled(bool enabled)
+bool setEnabled(bool enabled, bool persist)
 ```
 
-Sets the enabled state of the temperature and humidity sensor. When disabled the sensor goes in power down mode. Call storeSettingsInFlash() on [NiclaSenseEnv](#class_nicla_sense_env) instance after changing the enabled state to make the change persistent.
+Sets the enabled state of the temperature and humidity sensor. When disabled the sensor goes in power down mode. When `persist` is true, the mode setting of [IndoorAirQualitySensor](#class_indoor_air_quality_sensor) and [OutdoorAirQualitySensor](#class_outdoor_air_quality_sensor) will also be persisted.
 
 #### Parameters
-* `enabled` The desired enabled state. True to enable the sensor, false to disable it.
+* `enabled` The desired enabled state. True to enable the sensor, false to disable it. 
+
+* `persist` If true, the change will be saved to flash memory. 
+
+#### Returns
+true if the operation was successful, false otherwise.
 <hr />
 
 # struct `Color` <a id="struct_color" class="anchor"></a>
