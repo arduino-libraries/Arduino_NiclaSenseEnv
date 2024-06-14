@@ -39,7 +39,7 @@ public:
      * @param brightness The brightness level of the indicator (0-255).
      * @param persist If true, the change will be saved to flash memory.
      *                When persist is True, the brightness will also be persisted.
-     * 
+     * @return True if the mode was set successfully, false otherwise.
      */
     bool enableIndoorAirQualityStatus(uint8_t brightness = 255, bool persist = false);
 
@@ -53,6 +53,7 @@ public:
      * @param b The blue value (0-255).
      * @param persist If true, the change will be saved to flash memory.
      *                When persist is True, the brightness will also be persisted.
+     * @return True if the color was set successfully, false otherwise.
      */
     bool setColor(uint8_t r, uint8_t g, uint8_t b, bool persist = false);
 
@@ -64,6 +65,7 @@ public:
      * @param brightness The brightness value (0-255).
      * @param persist If true, the change will be saved to flash memory.
      *                When persist is True, the brightness will also be persisted.
+     * @return True if the color was set successfully, false otherwise.
      */
     bool setColor(uint8_t r, uint8_t g, uint8_t b, uint8_t brightness, bool persist = false); ;
 
@@ -74,6 +76,7 @@ public:
      * @param color The RGB color to set.
      * @param persist If true, the change will be saved to flash memory.
      *                When persist is True, the brightness will also be persisted.
+     * @return True if the color was set successfully, false otherwise.
      */
     bool setColor(Color color, bool persist = false);
 
@@ -83,6 +86,7 @@ public:
      * @param brightness The desired brightness level (0-255).
      * @param persist If true, the change will be saved to flash memory.
      *                When persist is True, the brightness will also be persisted.
+     * @return True if the color was set successfully, false otherwise.
      */
     bool setColor(Color color, uint8_t brightness, bool persist = false);
 
@@ -105,6 +109,7 @@ public:
      * This function allows you to adjust the brightness of the RGB LED.
      * @param brightness The brightness level to set (0-255).
      * @param persist If true, the change will be saved to flash memory.
+     * @return True if the brightness was set successfully, false otherwise.
      */
     bool setBrightness(uint8_t brightness, bool persist = false);
 };

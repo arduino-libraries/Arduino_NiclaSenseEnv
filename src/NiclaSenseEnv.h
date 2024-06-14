@@ -166,6 +166,7 @@ public:
      * @param baudRate The desired baud rate for the UART communication.
      The supported values are: 1200, 2400, 4800, 9600, 19200, 38400, 57600, 115200
      * @param persist Set to true to store the setting in flash, to false otherwise.
+     * @return True if the baud rate was set successfully, false otherwise.
      */
     bool setUARTBaudRate(int baudRate, bool persist);
 
@@ -194,6 +195,7 @@ public:
      * @param enabled True to enable UART CSV output, false to disable.
      * @param persist True to store the setting in flash, false otherwise.
      *                When set to True, it will also persist the value set via `setDebuggingEnabled`.
+     * @return True if the CSV output mode was set successfully, false otherwise.
      */
     bool setUARTCSVOutputEnabled(bool enabled, bool persist = false);
 
@@ -208,6 +210,7 @@ public:
      * @brief Sets the CSV delimiter for parsing CSV data.
      * @param delimiter The character to be used as the CSV delimiter.
      * @param persist If true, the change will be saved to flash memory.
+     * @return True if the delimiter was set successfully, false otherwise.
      */
     bool setCSVDelimiter(char delimiter, bool persist = false);
 
@@ -224,6 +227,7 @@ public:
      * @param enabled A boolean value indicating whether debugging is enabled or not.
      * @param persist If true, the change will be saved to flash memory.
      * When setting this to true the value set via `setUARTCSVOutputEnabled` will also be persisted.
+     * @return True if the debugging mode was set successfully, false otherwise.
      */
     bool setDebuggingEnabled(bool enabled, bool persist = false);
 
@@ -232,6 +236,7 @@ public:
      * 
      * @param address The new I2C address. Valid values are 0 to 127.
      * @param persist If true, the change will be saved to flash memory.
+     * @return True if the address was set successfully, false otherwise.
      */
     bool setDeviceAddress(int address, bool persist = false);
 

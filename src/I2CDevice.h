@@ -144,6 +144,7 @@ protected:
     /**
      * @brief Makes the value of a given register persistent.
      * @param registerInfo The register to make persistent.
+     * @return Whether or not the register value was successfully persisted.
      */
     bool persistRegister(RegisterInfo registerInfo);
 

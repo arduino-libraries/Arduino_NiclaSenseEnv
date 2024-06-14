@@ -35,6 +35,7 @@ public:
      * When persist is true, the `errorStatusEnabled` setting will also be persisted.
      * @param brightness : The brightness of the orange LED. Range is 0 to 255.
      * @param persist : If true, the brightness setting will be saved to flash memory.
+     * @return True if the brightness was set successfully, false otherwise.
      */
     bool setBrightness(uint8_t brightness, bool persist = false);
 
@@ -50,6 +51,7 @@ public:
      * When persist is true, the brightness setting will also be saved to flash memory.
      * @param enabled : Whether to enable or disable the orange LED error status.
      * @param persist : If true, the change will be saved to flash memory.
+     * @return True if the mode was set successfully, false otherwise.
      */
     bool setErrorStatusEnabled(bool enabled, bool persist = false);
 };

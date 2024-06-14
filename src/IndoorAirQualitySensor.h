@@ -118,7 +118,7 @@ public:
      * @param sensorMode The mode to set. See the IndoorAirQualitySensorMode enum class for possible values.
      * @param persist If true, the change will be saved to flash memory.
      *                When persist is true, the mode setting of OutdoorAirQualitySensor and TemperatureHumiditySensor will also be persisted.
-     * 
+     * @return True if the mode was set successfully, false otherwise.
      */
     bool setMode(IndoorAirQualitySensorMode sensorMode, bool persist);
 
@@ -142,6 +142,7 @@ public:
      * @param isEnabled True to enable the sensor, false to disable it.
      * @param persist If true, the change will be saved to flash memory.
      *                When persist is true, the mode setting of IndoorAirQualitySensor and TemperatureHumiditySensor will also be persisted.
+     * @return True if the the sensor was enabled successfully.
      */
     bool setEnabled(bool isEnabled, bool persist = false);
 };
