@@ -106,5 +106,5 @@ public:
      * @param brightness The brightness level to set (0-255).
      * @param persist If true, the change will be saved to flash memory.
      */
-    boo setBrightness(uint8_t brightness, bool persist = false);
+    bool setBrightness(uint8_t brightness, bool persist = false);
 };
