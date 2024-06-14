@@ -35,11 +35,10 @@ void setup() {
     Serial.print("🔧 Changing device address to 0x");
     Serial.print(customI2CAddress, HEX);
     Serial.println("...");
-    device.setDeviceAddress(customI2CAddress);
+    
+    // Setting the second parameter to true makes the change persistent
+    device.setDeviceAddress(customI2CAddress, true);
     checkConnection(device);
-
-    // Store the new address in flash
-    device.storeSettingsInFlash();
 
     Serial.println("🔄 Resetting device to check if change is persistent...");
     device.reset();

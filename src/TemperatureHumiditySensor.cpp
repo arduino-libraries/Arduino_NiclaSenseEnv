@@ -23,15 +23,21 @@ bool TemperatureHumiditySensor::enabled() {
     return (status & 1) != 0;
 }
 
-void TemperatureHumiditySensor::setEnabled(bool enabled) {
+bool TemperatureHumiditySensor::setEnabled(bool enabled, bool persist) {
     // Read the current status and update the least significant bit with the new value
     uint8_t status = this->readFromRegister<uint8_t>(STATUS_REGISTER_INFO);
     
     // Check if current value is already the desired value
     if (static_cast<bool>(status & 1) == enabled) {
-        return;
+        return true;
     }
 
     status = enabled ? (status | 1) : (status & 0xFE);
     this->writeToRegister(STATUS_REGISTER_INFO, status);
+
+    if(persist) {
+        return this->persistRegister(STATUS_REGISTER_INFO);
+    }
+
+    return true;
 }

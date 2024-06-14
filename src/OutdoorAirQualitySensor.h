@@ -10,7 +10,7 @@ enum class OutdoorAirQualitySensorMode {
     powerDown = 0, ///< Mode to turn off the sensor and reduce power consumption
     cleaning = 1, ///< Cleaning mode to perform a thermal cleaning cycle of the MOx element
     outdoorAirQuality = 2, ///< Mode to measure outdoor air quality
-    defaultMode = powerDown // Can't use default as it's a reserved keyword
+    defaultMode = powerDown // Can't use 'default'  as it's a reserved keyword
 };
 
 /**
@@ -95,7 +95,6 @@ public:
      * This function allows you to set the mode of the outdoor air quality sensor.
      * Possible values are: powerDown, cleaning, outdoorAirQuality.
      * See OutdoorAirQualitySensorMode for more information.
-     * Call storeSettingsInFlash() on NiclaSenseEnv instance after changing the mode to make the change persistent.
      * 
      * Note on cleaning mode:
      * The cleaning mode performs a thermal cleaning cycle of the MOx element. It can eliminate some light pollution 
@@ -106,8 +105,11 @@ public:
      * The cleaning procedure takes 1 minute (blocking).
      * 
      * @param sensorMode The mode to set for the sensor.
+     * @param persist If true, the change will be saved to flash memory.
+     *                When persist is true, the mode setting of IndoorAirQualitySensor and TemperatureHumiditySensor will also be persisted.
+     * @return True if the mode was set successfully, false otherwise.
      */
-    void setMode(OutdoorAirQualitySensorMode sensorMode);
+    bool setMode(OutdoorAirQualitySensorMode sensorMode, bool persist = false);
 
     /**
      * @brief Gets the outdoor air quality sensor mode as a string.
@@ -126,10 +128,13 @@ public:
     /**
      * @brief Sets the enabled state of the outdoor air quality sensor.
      * When disabled the sensor goes in power down mode.
-     * Call storeSettingsInFlash() on NiclaSenseEnv instance after changing the enabled state to make the change persistent.
+     * When the sensor is enabled after being disabled, the sensor will go back to the outdoorAirQuality mode.
      * @param isEnabled True to enable the sensor, false to disable it.
+     * @param persist If true, the change will be saved to flash memory.
+     *                When persist is true, the mode setting of IndoorAirQualitySensor and TemperatureHumiditySensor will also be persisted.
+     * @return True if the enabled state was set successfully, false otherwise.
      */
-    void setEnabled(bool isEnabled);
+    bool setEnabled(bool isEnabled, bool persist = false);
 };
 
 #endif

@@ -43,17 +43,25 @@ OutdoorAirQualitySensorMode OutdoorAirQualitySensor::mode() {
     return OutdoorAirQualitySensorMode((data >> 4) & 3);
 }
 
-void OutdoorAirQualitySensor::setMode(OutdoorAirQualitySensorMode sensorMode) {
+bool OutdoorAirQualitySensor::setMode(OutdoorAirQualitySensorMode sensorMode, bool persist) {
     uint8_t currentRegisterData = readFromRegister<uint8_t>(STATUS_REGISTER_INFO);
     uint8_t mode = static_cast<uint8_t>(sensorMode); // convert to numeric type
 
     // Check if the existing value is already the same
     if ((currentRegisterData & (3 << 4)) == (mode << 4)) {
-        return;
+        return true;
     }
 
     // Overwrite bits 4 and 5 with the new value
-    writeToRegister<uint8_t>(STATUS_REGISTER_INFO, (currentRegisterData & ~(3 << 4)) | (mode << 4));
+    if(!writeToRegister<uint8_t>(STATUS_REGISTER_INFO, (currentRegisterData & ~(3 << 4)) | (mode << 4))){
+        return false;
+    }
+
+    if(persist){
+        return persistRegister(STATUS_REGISTER_INFO);
+    }
+
+    return true;
 }
 
 String OutdoorAirQualitySensor::modeString() {
@@ -73,14 +81,12 @@ bool OutdoorAirQualitySensor::enabled() {
     return mode() != OutdoorAirQualitySensorMode::powerDown;
 }
 
-void OutdoorAirQualitySensor::setEnabled(bool isEnabled) {
+bool OutdoorAirQualitySensor::setEnabled(bool isEnabled, bool persist) {
     // Ignore the request if the sensor is already in the desired state to maintain the current mode
     if (isEnabled == enabled()) {
-        return;
+        return true;
     }
-    if (isEnabled) {
-        setMode(OutdoorAirQualitySensorMode::defaultMode);
-    } else {
-        setMode(OutdoorAirQualitySensorMode::powerDown);
-    }
+
+    auto mode = isEnabled ? OutdoorAirQualitySensorMode::outdoorAirQuality : OutdoorAirQualitySensorMode::powerDown;
+    return setMode(mode, persist);
 }

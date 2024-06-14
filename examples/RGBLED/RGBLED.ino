@@ -21,8 +21,7 @@ void pulseLED(RGBLED &led) {
 }
 
 void pulseColors(RGBLED &led) {
-    // Brightness can also be set via 4th struct element
-    led.setColor({255, 0, 0}, 255);  // Red
+    led.setColor({255, 0, 0});  // Red
     pulseLED(led);
 
     // Color can be set via Color struct or 3 separate uint8_t values

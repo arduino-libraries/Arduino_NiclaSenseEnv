@@ -32,21 +32,26 @@ public:
 
     /**
      * Sets the brightness of the orange LED.
-     * Call storeSettingsInFlash() on NiclaSenseEnv instance after changing the orange LED brightness to make the change persistent.
-     * @param brightness : The brightness of the orange LED. Range is 0 to 63.
+     * When persist is true, the `errorStatusEnabled` setting will also be persisted.
+     * @param brightness : The brightness of the orange LED. Range is 0 to 255.
+     * @param persist : If true, the brightness setting will be saved to flash memory.
+     * @return True if the brightness was set successfully, false otherwise.
      */
-    void setBrightness(uint8_t brightness = 63);
+    bool setBrightness(uint8_t brightness, bool persist = false);
 
     /**
      * Determines whether the orange LED is used to indicate an error status of one of the sensors.
+     * When a board error condition occurs the LED blinks, independently of the brightness setting.
      * @return True if the orange LED is used for error status, false otherwise.
      */
     bool errorStatusEnabled();
 
     /**
      * Enables or disables the orange LED to indicate an error status of one of the sensors.
-     * Call storeSettingsInFlash() on NiclaSenseEnv instance after enabling/disabling the orange LED error status to make the change persistent.
+     * When persist is true, the brightness setting will also be saved to flash memory.
      * @param enabled : Whether to enable or disable the orange LED error status.
+     * @param persist : If true, the change will be saved to flash memory.
+     * @return True if the mode was set successfully, false otherwise.
      */
-    void setErrorStatusEnabled(bool enabled);
+    bool setErrorStatusEnabled(bool enabled, bool persist = false);
 };

@@ -40,7 +40,8 @@ void setup() {
 
         // Enable outdoor air quality sensor (disabled by default)
         // Please note that it may take some time for the sensor to deliver the first data
-        outdoorAirQualitySensor.setMode(OutdoorAirQualitySensorMode::outdoorAirQuality);
+        // Use setEnabled(true, true) make the change persistent
+        outdoorAirQualitySensor.setEnabled(true);
         displaySensorData(outdoorAirQualitySensor);
 
         // Optionally disable the sensor
