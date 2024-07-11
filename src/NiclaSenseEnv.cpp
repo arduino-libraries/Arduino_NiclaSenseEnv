@@ -86,7 +86,7 @@ bool NiclaSenseEnv::persistSettings() {
             return true;
         }
         // Even a value of 1 us seems to work, but we start with 100 us to be safe.
-        Serial.println("⌛️ Waiting for flash write to complete...");
+        // Serial.println("⌛️ Waiting for flash write to complete...");
         // Exponential sleep duration
         delayMicroseconds(100 * (2 << i));
     }
@@ -139,7 +139,7 @@ bool NiclaSenseEnv::restoreFactorySettings() {
         if ((boardControlRegisterData & (1 << 5)) == 0) {
             return persistSettings();
         }
-        Serial.println("⌛️ Waiting for factory reset to complete...");
+        // Serial.println("⌛️ Waiting for factory reset to complete...");
         // Exponential sleep duration
         delayMicroseconds(100 * (2 << i));
     }

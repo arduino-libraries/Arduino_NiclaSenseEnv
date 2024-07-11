@@ -19,7 +19,7 @@ bool I2CDevice::persistRegister(RegisterInfo registerInfo){
             return true;
         }
         // Even a value of 1 us seems to work, but we start with 100 us to be safe.
-        Serial.println("⌛️ Waiting for flash write to complete...");
+        // Serial.println("⌛️ Waiting for flash write to complete...");
         // Exponential sleep duration
         delayMicroseconds(100 * (2 << i));
     }
