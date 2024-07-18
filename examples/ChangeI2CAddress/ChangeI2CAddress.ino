@@ -4,7 +4,7 @@
  * Initial author: Sebastian Romero (s.romero@arduino.cc)
  */
 
-#include "NiclaSenseEnv.h"
+#include "Arduino_NiclaSenseEnv.h"
 
 void checkConnection(NiclaSenseEnv& device) {
     if (device.connected()) {

@@ -4,7 +4,7 @@
  * Initial author: Sebastian Romero (s.romero@arduino.cc)
  */
 
-#include "NiclaSenseEnv.h"  // Include the NiclaSenseEnv library
+#include "Arduino_NiclaSenseEnv.h"  // Include the NiclaSenseEnv library
 
 void displaySensorData(TemperatureHumiditySensor& sensor) {
     if (sensor.enabled()) {
