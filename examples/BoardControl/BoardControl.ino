@@ -5,7 +5,7 @@
  * Initial author: Sebastian Romero (s.romero@arduino.cc)
  */
 
-#include "NiclaSenseEnv.h"
+#include "Arduino_NiclaSenseEnv.h"
 
 void printDeviceInfo(NiclaSenseEnv& device) {
     Serial.print("🔌 Device (0x");

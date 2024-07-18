@@ -4,7 +4,7 @@
  * Initial author: Sebastian Romero (s.romero@arduino.cc)
  */
 
-#include "NiclaSenseEnv.h"
+#include "Arduino_NiclaSenseEnv.h"
 
 void pulseLED(RGBLED &led) {
     Serial.println("🌈 RGB values: " + String(led.color().red) + ", " + String(led.color().green) + ", " + String(led.color().blue));

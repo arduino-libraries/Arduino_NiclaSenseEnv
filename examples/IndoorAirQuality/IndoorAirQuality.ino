@@ -5,7 +5,7 @@
  * Initial author: Sebastian Romero (s.romero@arduino.cc)
  */
 
-#include "NiclaSenseEnv.h"
+#include "Arduino_NiclaSenseEnv.h"
 
 void displaySensorData(IndoorAirQualitySensor& sensor) {
     if (sensor.enabled()) {
