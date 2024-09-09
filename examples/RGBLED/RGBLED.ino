@@ -24,11 +24,11 @@ void pulseColors(RGBLED &led) {
     led.setColor({255, 0, 0});  // Red
     pulseLED(led);
 
-    // Color can be set via Color struct or 3 separate uint8_t values
+    // Color can be set via LEDColor struct or 3 separate uint8_t values
     led.setColor(0, 255, 0);  // Green
     pulseLED(led);
 
-    Color blueColor = {0, 0, 255};
+    LEDColor blueColor = {0, 0, 255};
     led.setColor(blueColor);  // Blue
     pulseLED(led);
     

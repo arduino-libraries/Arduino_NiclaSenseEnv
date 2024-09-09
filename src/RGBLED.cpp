@@ -23,11 +23,11 @@ bool RGBLED::setColor(uint8_t r, uint8_t g, uint8_t b, bool persist) {
     return true;
 }
 
-bool RGBLED::setColor(Color color, bool persist) {
+bool RGBLED::setColor(LEDColor color, bool persist) {
     return setColor(color.red, color.green, color.blue, persist);
 }
 
-Color RGBLED::color() {
+LEDColor RGBLED::color() {
     uint8_t red = readFromRegister<uint8_t>(RGB_LED_RED_REGISTER_INFO);
     uint8_t green = readFromRegister<uint8_t>(RGB_LED_GREEN_REGISTER_INFO);
     uint8_t blue = readFromRegister<uint8_t>(RGB_LED_BLUE_REGISTER_INFO);
