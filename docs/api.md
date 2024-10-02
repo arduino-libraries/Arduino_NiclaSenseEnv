@@ -9,7 +9,7 @@
 `class ` [`OutdoorAirQualitySensor`](#class_outdoor_air_quality_sensor) | Class representing an outdoor air quality sensor (ZMOD4510)
 `class ` [`RGBLED`](#class_r_g_b_l_e_d) | Represents the on-board RGB LED that can be controlled using I2C communication.
 `class ` [`TemperatureHumiditySensor`](#class_temperature_humidity_sensor) | Represents a temperature and humidity sensor.
-`struct ` [`Color`](#struct_color) | Represents a color with red, green, and blue components.
+`struct ` [`LEDColor`](#struct_l_e_d_color) | Represents a color with red, green, and blue components.
 `struct ` [`RegisterInfo`](#struct_register_info) | Structure representing information about a register.
 
 # class `I2CDevice` <a id="class_i2_c_device" class="anchor"></a>
@@ -1030,8 +1030,8 @@ The [RGBLED](#class_r_g_b_l_e_d) class provides methods to control the color and
 | [`RGBLED`](#class_r_g_b_l_e_d_1a350a112613fac1242743e4b1de07a057) | Initializes an instance of the [RGBLED](#class_r_g_b_l_e_d) class with the specified device address. |
 | [`enableIndoorAirQualityStatus`](#class_r_g_b_l_e_d_1aa6fbd29854537566dee74d73875615c6) | Enables the indoor air quality status indicator on the RGB LED. When enabled, the RGB LED will change color based on the air quality (red = bad, green = good)  |
 | [`setColor`](#class_r_g_b_l_e_d_1a04058a97af30f3eb3836f7dd1eeb1c01) | Sets the RGB values of the LED. |
-| [`setColor`](#class_r_g_b_l_e_d_1ac5fff451e2e16b7498917fbe02134adb) | Sets the RGB color of the LED using a [Color](#struct_color) object. The [Color](#struct_color) object contains the red, green, and blue values that can be changed individually. Note: A value of 0, 0, 0 will set the color based on the IAQ value from the Indoor Air Quality sensor. |
-| [`color`](#class_r_g_b_l_e_d_1a6ce467b464540233311718ac5055e7bc) | Gets the current RGB color of the LED. |
+| [`setColor`](#class_r_g_b_l_e_d_1aac7fba93bc4437940f6a525886135983) | Sets the RGB color of the LED using a [LEDColor](#struct_l_e_d_color) object. The [LEDColor](#struct_l_e_d_color) object contains the red, green, and blue values that can be changed individually. Note: A value of 0, 0, 0 will set the color based on the IAQ value from the Indoor Air Quality sensor. |
+| [`color`](#class_r_g_b_l_e_d_1a0b5c265b6940d324faf112103e60e5ff) | Gets the current RGB color of the LED. |
 | [`brightness`](#class_r_g_b_l_e_d_1ae0d4a3a49a797220fe19ee70e8f3ec67) | Get the brightness of the RGB LED (0-255) |
 | [`setBrightness`](#class_r_g_b_l_e_d_1a72dd5b87e665205ca86de73a193ce42f) | Sets the brightness of the RGB LED. This function allows you to adjust the brightness of the RGB LED. |
 
@@ -1101,13 +1101,13 @@ This function sets the red, green, and blue values of the LED using individual v
 True if the color was set successfully, false otherwise.
 <hr />
 
-### `setColor` <a id="class_r_g_b_l_e_d_1ac5fff451e2e16b7498917fbe02134adb" class="anchor"></a>
+### `setColor` <a id="class_r_g_b_l_e_d_1aac7fba93bc4437940f6a525886135983" class="anchor"></a>
 
 ```cpp
-bool setColor( Color color, bool persist)
+bool setColor( LEDColor color, bool persist)
 ```
 
-Sets the RGB color of the LED using a [Color](#struct_color) object. The [Color](#struct_color) object contains the red, green, and blue values that can be changed individually. Note: A value of 0, 0, 0 will set the color based on the IAQ value from the Indoor Air Quality sensor.
+Sets the RGB color of the LED using a [LEDColor](#struct_l_e_d_color) object. The [LEDColor](#struct_l_e_d_color) object contains the red, green, and blue values that can be changed individually. Note: A value of 0, 0, 0 will set the color based on the IAQ value from the Indoor Air Quality sensor.
 
 #### Parameters
 * `color` The RGB color to set. 
@@ -1118,16 +1118,16 @@ Sets the RGB color of the LED using a [Color](#struct_color) object. The [Color]
 True if the color was set successfully, false otherwise.
 <hr />
 
-### `color` <a id="class_r_g_b_l_e_d_1a6ce467b464540233311718ac5055e7bc" class="anchor"></a>
+### `color` <a id="class_r_g_b_l_e_d_1a0b5c265b6940d324faf112103e60e5ff" class="anchor"></a>
 
 ```cpp
-Color color()
+LEDColor color()
 ```
 
 Gets the current RGB color of the LED.
 
 #### Returns
-The current RGB color as a [Color](#struct_color) object.
+The current RGB color as a [LEDColor](#struct_l_e_d_color) object.
 <hr />
 
 ### `brightness` <a id="class_r_g_b_l_e_d_1ae0d4a3a49a797220fe19ee70e8f3ec67" class="anchor"></a>
@@ -1262,7 +1262,7 @@ Sets the enabled state of the temperature and humidity sensor. When disabled the
 true if the operation was successful, false otherwise.
 <hr />
 
-# struct `Color` <a id="struct_color" class="anchor"></a>
+# struct `LEDColor` <a id="struct_l_e_d_color" class="anchor"></a>
 
 Represents a color with red, green, and blue components.
 
@@ -1270,13 +1270,13 @@ Represents a color with red, green, and blue components.
 
  Members                        | Descriptions                                
 --------------------------------|---------------------------------------------
-| [`red`](#struct_color_1a8c55aa73e839e57527559cd732bda475) | The red component of the color. |
-| [`green`](#struct_color_1a4f8414e1814c166da1859ce388149d78) | The green component of the color. |
-| [`blue`](#struct_color_1acad45c325d520d1c24ea774099821c7c) | The blue component of the color. |
+| [`red`](#struct_l_e_d_color_1ae7023d24a0d94b1b77a32d2f3aadd581) | The red component of the color. |
+| [`green`](#struct_l_e_d_color_1a2ea3a2b138f2281a3d861e0e377dd84f) | The green component of the color. |
+| [`blue`](#struct_l_e_d_color_1a4580c3efc87cb738b66e95fc7b1818db) | The blue component of the color. |
 
 ## Members
 
-### `red` <a id="struct_color_1a8c55aa73e839e57527559cd732bda475" class="anchor"></a>
+### `red` <a id="struct_l_e_d_color_1ae7023d24a0d94b1b77a32d2f3aadd581" class="anchor"></a>
 
 ```cpp
 uint8_t red
@@ -1285,7 +1285,7 @@ uint8_t red
 The red component of the color.
 <hr />
 
-### `green` <a id="struct_color_1a4f8414e1814c166da1859ce388149d78" class="anchor"></a>
+### `green` <a id="struct_l_e_d_color_1a2ea3a2b138f2281a3d861e0e377dd84f" class="anchor"></a>
 
 ```cpp
 uint8_t green
@@ -1294,7 +1294,7 @@ uint8_t green
 The green component of the color.
 <hr />
 
-### `blue` <a id="struct_color_1acad45c325d520d1c24ea774099821c7c" class="anchor"></a>
+### `blue` <a id="struct_l_e_d_color_1a4580c3efc87cb738b66e95fc7b1818db" class="anchor"></a>
 
 ```cpp
 uint8_t blue
