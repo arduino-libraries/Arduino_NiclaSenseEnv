@@ -3,7 +3,7 @@
 /**
  * @brief Represents a color with red, green, and blue components.
  */
-struct Color {
+struct LEDColor {
     uint8_t red;    /**< The red component of the color. */
     uint8_t green;  /**< The green component of the color. */
     uint8_t blue;   /**< The blue component of the color. */
@@ -57,21 +57,21 @@ public:
     bool setColor(uint8_t r, uint8_t g, uint8_t b, bool persist = false);
 
     /**
-     * @brief Sets the RGB color of the LED using a Color object.
-     * The Color object contains the red, green, and blue values that can be changed individually.
+     * @brief Sets the RGB color of the LED using a LEDColor object.
+     * The LEDColor object contains the red, green, and blue values that can be changed individually.
      * Note: A value of 0, 0, 0 will set the color based on the IAQ value from the Indoor Air Quality sensor.
      * @param color The RGB color to set.
      * @param persist If true, the change will be saved to flash memory.
      * @return True if the color was set successfully, false otherwise.
      */
-    bool setColor(Color color, bool persist = false);
+    bool setColor(LEDColor color, bool persist = false);
 
     /**
      * @brief Gets the current RGB color of the LED.
      * 
-     * @return The current RGB color as a Color object.
+     * @return The current RGB color as a LEDColor object.
      */
-    Color color();
+    LEDColor color();
 
     /**
      * @brief Get the brightness of the RGB LED (0-255)
