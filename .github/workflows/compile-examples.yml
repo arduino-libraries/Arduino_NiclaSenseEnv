@@ -23,7 +23,6 @@ on:
 
 env:
   SKETCHES_REPORTS_PATH: sketches-reports
-  SKETCHES_REPORTS_ARTIFACT_NAME: sketches-reports
 
 jobs:
   build:
@@ -39,14 +38,23 @@ jobs:
       matrix:
         board:
           - fqbn: arduino:mbed_portenta:envie_m7
+            artifact-name-suffix: arduino-mbed_portenta-envie_m7
           - fqbn: arduino:mbed_nano:nanorp2040connect
+            artifact-name-suffix: arduino-mbed__nano-nanorp2040connect
           - fqbn: arduino:mbed_nicla:nicla_vision
+            artifact-name-suffix: arduino-mbed_nicla-nicla_vision
           - fqbn: arduino:mbed_nicla:nicla_sense
+            artifact-name-suffix: arduino-mbed_nicla-nicla_sense
           - fqbn: arduino:mbed_nano:nano33ble
+            artifact-name-suffix: arduino-mbed_nano-nano33ble
           - fqbn: arduino:renesas_portenta:portenta_c33
+            artifact-name-suffix: arduino-renesas_portenta-portenta_c33
           - fqbn: arduino:renesas_uno:unor4wifi
+            artifact-name-suffix: arduino-renesas_uno-unor4wifi
           - fqbn: arduino:samd:mkrwifi1010
+            artifact-name-suffix: arduino-samd-mkrwifi1010
           - fqbn: arduino:esp32:nano_nora
+            artifact-name-suffix: arduino-esp32-nano_nora
 
     steps:
       - name: Checkout repository
@@ -66,7 +74,7 @@ jobs:
         with:
           if-no-files-found: error
           path: ${{ env.SKETCHES_REPORTS_PATH }}
-          name: ${{ env.SKETCHES_REPORTS_ARTIFACT_NAME }}
+          name: sketches-report-${{ matrix.board.artifact-name-suffix }}
 
   report-size-deltas:
     needs: build
@@ -82,7 +90,6 @@ jobs:
         continue-on-error: true # If compilation failed for all boards then there are no artifacts
         uses: actions/download-artifact@v4
         with:
-          name: ${{ env.SKETCHES_REPORTS_ARTIFACT_NAME }}
           path: ${{ env.SKETCHES_REPORTS_PATH }}
 
       - name: Comment size deltas report to PR
