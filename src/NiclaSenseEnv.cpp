@@ -1,7 +1,5 @@
 #include "NiclaSenseEnv.h"
 #include "registers.h"
-#include <string>
-#include <array>
 
 // Define baud rate values corresponding to indices 0 - 7
 const int baudRateMap[] = {1200, 2400, 4800, 9600, 19200, 38400, 57600, 115200};
@@ -100,11 +98,11 @@ String NiclaSenseEnv::serialNumber() {
     readFromRegister<uint8_t, size>(SERIAL_NUMBER_REGISTER_INFO, serialNumber);
 
     // Construct serial number by concatenating each of the 6 bytes as a string
-    std::string serialNumberString;
+    String serialNumberString;
     for (auto byte : serialNumber) {
-        serialNumberString += std::to_string(byte);
+        serialNumberString += String(byte, DEC);
     }
-    return String(serialNumberString.c_str());
+    return serialNumberString;
 }
 
 int NiclaSenseEnv::productID() {
