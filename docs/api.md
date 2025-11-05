@@ -341,11 +341,11 @@ This class provides methods to interact with the device to enable and disable fe
 | [`NiclaSenseEnv`](#class_nicla_sense_env_1af28c5f5a56ca984525a4939b5d5287d7) | Constructs a new [NiclaSenseEnv](#class_nicla_sense_env) object. |
 | [`NiclaSenseEnv`](#class_nicla_sense_env_1a8b3c73e53693c753b56f1fecc3a6c484) | Constructs a new [NiclaSenseEnv](#class_nicla_sense_env) object. |
 | [`~NiclaSenseEnv`](#class_nicla_sense_env_1a4e86e540c8d0ab99d89dc3242029fe39) | Destroy the Nicla Sense Env object. This will call the [end()](#class_nicla_sense_env_1abba16f72b55ddfd648c8cde348eb6338) method while frees up allocated resources. |
-| [`temperatureHumiditySensor`](#class_nicla_sense_env_1a73d8ae251e1463315f00da6d6420b9c6) | Returns the [TemperatureHumiditySensor](#class_temperature_humidity_sensor) object to interact with the temperature and humidity sensor. |
-| [`indoorAirQualitySensor`](#class_nicla_sense_env_1a4c36a3cc7c0dc351a720fe3bd8ce2ede) | Returns the [IndoorAirQualitySensor](#class_indoor_air_quality_sensor) object to interact with the indoor air quality sensor. |
-| [`outdoorAirQualitySensor`](#class_nicla_sense_env_1a13c8a3127acea0364f1e771a49ad89d6) | Returns the [OutdoorAirQualitySensor](#class_outdoor_air_quality_sensor) object to interact with the outdoor air quality sensor. |
-| [`rgbLED`](#class_nicla_sense_env_1aea2da7e61de2736756eba56b417eaa0b) | Returns the [RGBLED](#class_r_g_b_l_e_d) object to interact with the RGB LED. |
-| [`orangeLED`](#class_nicla_sense_env_1a7938bdcc03918a9900538373e0c02156) | Returns a reference to the [OrangeLED](#class_orange_l_e_d) object to interact with the orange LED. |
+| [`temperatureHumiditySensor`](#class_nicla_sense_env_1aef089a2229eb0e26a06c972226b6adeb) | Returns the [TemperatureHumiditySensor](#class_temperature_humidity_sensor) object to interact with the temperature and humidity sensor. |
+| [`indoorAirQualitySensor`](#class_nicla_sense_env_1ac42944c69523a78572da38a86f065f57) | Returns the [IndoorAirQualitySensor](#class_indoor_air_quality_sensor) object to interact with the indoor air quality sensor. |
+| [`outdoorAirQualitySensor`](#class_nicla_sense_env_1a6c46868908a15f4794b5fe52cf5c1027) | Returns the [OutdoorAirQualitySensor](#class_outdoor_air_quality_sensor) object to interact with the outdoor air quality sensor. |
+| [`rgbLED`](#class_nicla_sense_env_1a310c7d26d0468f362d70d89953e8e445) | Returns the [RGBLED](#class_r_g_b_l_e_d) object to interact with the RGB LED. |
+| [`orangeLED`](#class_nicla_sense_env_1a5212ca3dd32af22c22c5302f2af33ceb) | Returns a reference to the [OrangeLED](#class_orange_l_e_d) object to interact with the orange LED. |
 | [`end`](#class_nicla_sense_env_1abba16f72b55ddfd648c8cde348eb6338) | Ends the operation of the [NiclaSenseEnv](#class_nicla_sense_env) class. |
 | [`persistSettings`](#class_nicla_sense_env_1a6f53bfdf4e8cc338b51089c393c52102) | Writes the current configuration to the flash memory. Stores board register 0x00 … 0x0B in flash to be default after reset. |
 | [`serialNumber`](#class_nicla_sense_env_1a8c580892d180c058380e6e497b36230a) | Retrieves the serial number of the device. |
@@ -402,7 +402,7 @@ Destroy the Nicla Sense Env object. This will call the [end()](#class_nicla_sens
 
 <hr />
 
-### `temperatureHumiditySensor` <a id="class_nicla_sense_env_1a73d8ae251e1463315f00da6d6420b9c6" class="anchor"></a>
+### `temperatureHumiditySensor` <a id="class_nicla_sense_env_1aef089a2229eb0e26a06c972226b6adeb" class="anchor"></a>
 
 ```cpp
 TemperatureHumiditySensor & temperatureHumiditySensor()
@@ -414,7 +414,7 @@ Returns the [TemperatureHumiditySensor](#class_temperature_humidity_sensor) obje
 The [TemperatureHumiditySensor](#class_temperature_humidity_sensor) object.
 <hr />
 
-### `indoorAirQualitySensor` <a id="class_nicla_sense_env_1a4c36a3cc7c0dc351a720fe3bd8ce2ede" class="anchor"></a>
+### `indoorAirQualitySensor` <a id="class_nicla_sense_env_1ac42944c69523a78572da38a86f065f57" class="anchor"></a>
 
 ```cpp
 IndoorAirQualitySensor & indoorAirQualitySensor()
@@ -426,7 +426,7 @@ Returns the [IndoorAirQualitySensor](#class_indoor_air_quality_sensor) object to
 A reference to the [IndoorAirQualitySensor](#class_indoor_air_quality_sensor) object.
 <hr />
 
-### `outdoorAirQualitySensor` <a id="class_nicla_sense_env_1a13c8a3127acea0364f1e771a49ad89d6" class="anchor"></a>
+### `outdoorAirQualitySensor` <a id="class_nicla_sense_env_1a6c46868908a15f4794b5fe52cf5c1027" class="anchor"></a>
 
 ```cpp
 OutdoorAirQualitySensor & outdoorAirQualitySensor()
@@ -438,7 +438,7 @@ Returns the [OutdoorAirQualitySensor](#class_outdoor_air_quality_sensor) object 
 The [OutdoorAirQualitySensor](#class_outdoor_air_quality_sensor) object.
 <hr />
 
-### `rgbLED` <a id="class_nicla_sense_env_1aea2da7e61de2736756eba56b417eaa0b" class="anchor"></a>
+### `rgbLED` <a id="class_nicla_sense_env_1a310c7d26d0468f362d70d89953e8e445" class="anchor"></a>
 
 ```cpp
 RGBLED & rgbLED()
@@ -450,7 +450,7 @@ Returns the [RGBLED](#class_r_g_b_l_e_d) object to interact with the RGB LED.
 [RGBLED](#class_r_g_b_l_e_d)& The reference to the [RGBLED](#class_r_g_b_l_e_d) object.
 <hr />
 
-### `orangeLED` <a id="class_nicla_sense_env_1a7938bdcc03918a9900538373e0c02156" class="anchor"></a>
+### `orangeLED` <a id="class_nicla_sense_env_1a5212ca3dd32af22c22c5302f2af33ceb" class="anchor"></a>
 
 ```cpp
 OrangeLED & orangeLED()
