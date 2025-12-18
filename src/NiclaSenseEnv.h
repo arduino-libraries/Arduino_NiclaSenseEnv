@@ -243,11 +243,13 @@ public:
 private:
     /**
      * @brief Converts the given baud rate to its native value.
+     * The native value is the value that is written to the corresponding register.
+     * It's not the baud rate itself but an index representing the baud rate.
      *
      * This function takes a baud rate as input and returns its corresponding native value.
      *
      * @param baudRate The baud rate to convert. The possible values are 1200, 2400, 4800, 9600, 19200, 38400, 57600, 115200
-     * @return The native value of the baud rate.
+     * @return The native value of the baud rate or -1 if the baud rate is invalid.
      */
     int baudRateNativeValue(int baudRate);
     
