@@ -68,6 +68,12 @@ constexpr size_t IDX_REL_IAQ = 27;
 constexpr size_t IDX_ETHANOL = 28;
 constexpr size_t IDX_ODOR_INTENSITY = 47;
 constexpr size_t IDX_SULFUR_ODOR = 48;
+
+template <typename T>
+struct FieldMapping {
+    size_t idx;
+    T NiclaSenseEnvSerial::*member;
+};
 }
 
 NiclaSenseEnvSerial::NiclaSenseEnvSerial(HardwareSerial &serialPort) : _serial(&serialPort) {}
@@ -167,42 +173,36 @@ void NiclaSenseEnvSerial::processCSVLine(String data) {
 
     auto fields = splitFields(data);
 
-    if (fields[IDX_TEMPERATURE].length()) {
-        setFloatField(_temperature, fields[IDX_TEMPERATURE]);
+    static const FieldMapping<float> floatFields[] = {
+        {IDX_TEMPERATURE, &NiclaSenseEnvSerial::_temperature},
+        {IDX_HUMIDITY, &NiclaSenseEnvSerial::_humidity},
+        {IDX_O3, &NiclaSenseEnvSerial::_o3},
+        {IDX_NO2, &NiclaSenseEnvSerial::_no2},
+        {IDX_IAQ, &NiclaSenseEnvSerial::_iaq},
+        {IDX_REL_IAQ, &NiclaSenseEnvSerial::_relativeIaq},
+        {IDX_CO2, &NiclaSenseEnvSerial::_co2},
+        {IDX_TVOC, &NiclaSenseEnvSerial::_tvoc},
+        {IDX_ETHANOL, &NiclaSenseEnvSerial::_ethanol},
+        {IDX_ODOR_INTENSITY, &NiclaSenseEnvSerial::_odorIntensity},
+    };
+
+    for (const auto &mapping : floatFields) {
+        if (fields[mapping.idx].length()) {
+            setFloatField(this->*mapping.member, fields[mapping.idx]);
+        }
     }
-    if (fields[IDX_HUMIDITY].length()) {
-        setFloatField(_humidity, fields[IDX_HUMIDITY]);
+
+    static const FieldMapping<int> intFields[] = {
+        {IDX_EPA_AQI, &NiclaSenseEnvSerial::_epaAqi},
+        {IDX_FAST_AQI, &NiclaSenseEnvSerial::_fastAqi},
+    };
+
+    for (const auto &mapping : intFields) {
+        if (fields[mapping.idx].length()) {
+            setIntField(this->*mapping.member, fields[mapping.idx]);
+        }
     }
-    if (fields[IDX_EPA_AQI].length()) {
-        setIntField(_epaAqi, fields[IDX_EPA_AQI]);
-    }
-    if (fields[IDX_FAST_AQI].length()) {
-        setIntField(_fastAqi, fields[IDX_FAST_AQI]);
-    }
-    if (fields[IDX_O3].length()) {
-        setFloatField(_o3, fields[IDX_O3]);
-    }
-    if (fields[IDX_NO2].length()) {
-        setFloatField(_no2, fields[IDX_NO2]);
-    }
-    if (fields[IDX_IAQ].length()) {
-        setFloatField(_iaq, fields[IDX_IAQ]);
-    }
-    if (fields[IDX_REL_IAQ].length()) {
-        setFloatField(_relativeIaq, fields[IDX_REL_IAQ]);
-    }
-    if (fields[IDX_CO2].length()) {
-        setFloatField(_co2, fields[IDX_CO2]);
-    }
-    if (fields[IDX_TVOC].length()) {
-        setFloatField(_tvoc, fields[IDX_TVOC]);
-    }
-    if (fields[IDX_ETHANOL].length()) {
-        setFloatField(_ethanol, fields[IDX_ETHANOL]);
-    }
-    if (fields[IDX_ODOR_INTENSITY].length()) {
-        setFloatField(_odorIntensity, fields[IDX_ODOR_INTENSITY]);
-    }
+
     if (fields[IDX_SULFUR_ODOR].length()) {
         int odorFlag = static_cast<int>(fields[IDX_SULFUR_ODOR].toInt());
         _sulfurOdor = odorFlag != 0;
