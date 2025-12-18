@@ -144,6 +144,15 @@ private:
      */
     void setIntField(int &field, const String &value);
 
+    template <typename T>
+    struct FieldMapping {
+        size_t idx;
+        T NiclaSenseEnvSerial::*member;
+    };
+
+    static const FieldMapping<float> floatFieldMappings[];
+    static const FieldMapping<int> intFieldMappings[];
+
     HardwareSerial *_serial = nullptr;
     char _delimiter = ',';
     bool _hasNewData = false;

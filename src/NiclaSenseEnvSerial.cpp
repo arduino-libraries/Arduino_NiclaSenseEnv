@@ -68,13 +68,26 @@ constexpr size_t IDX_REL_IAQ = 27;
 constexpr size_t IDX_ETHANOL = 28;
 constexpr size_t IDX_ODOR_INTENSITY = 47;
 constexpr size_t IDX_SULFUR_ODOR = 48;
-
-template <typename T>
-struct FieldMapping {
-    size_t idx;
-    T NiclaSenseEnvSerial::*member;
-};
 }
+
+// Static lookup tables for CSV field parsing
+const NiclaSenseEnvSerial::FieldMapping<float> NiclaSenseEnvSerial::floatFieldMappings[] = {
+    {IDX_TEMPERATURE, &NiclaSenseEnvSerial::_temperature},
+    {IDX_HUMIDITY, &NiclaSenseEnvSerial::_humidity},
+    {IDX_O3, &NiclaSenseEnvSerial::_o3},
+    {IDX_NO2, &NiclaSenseEnvSerial::_no2},
+    {IDX_IAQ, &NiclaSenseEnvSerial::_iaq},
+    {IDX_REL_IAQ, &NiclaSenseEnvSerial::_relativeIaq},
+    {IDX_CO2, &NiclaSenseEnvSerial::_co2},
+    {IDX_TVOC, &NiclaSenseEnvSerial::_tvoc},
+    {IDX_ETHANOL, &NiclaSenseEnvSerial::_ethanol},
+    {IDX_ODOR_INTENSITY, &NiclaSenseEnvSerial::_odorIntensity},
+};
+
+const NiclaSenseEnvSerial::FieldMapping<int> NiclaSenseEnvSerial::intFieldMappings[] = {
+    {IDX_EPA_AQI, &NiclaSenseEnvSerial::_epaAqi},
+    {IDX_FAST_AQI, &NiclaSenseEnvSerial::_fastAqi},
+};
 
 NiclaSenseEnvSerial::NiclaSenseEnvSerial(HardwareSerial &serialPort) : _serial(&serialPort) {}
 
@@ -173,31 +186,13 @@ void NiclaSenseEnvSerial::processCSVLine(String data) {
 
     auto fields = splitFields(data);
 
-    static const FieldMapping<float> floatFields[] = {
-        {IDX_TEMPERATURE, &NiclaSenseEnvSerial::_temperature},
-        {IDX_HUMIDITY, &NiclaSenseEnvSerial::_humidity},
-        {IDX_O3, &NiclaSenseEnvSerial::_o3},
-        {IDX_NO2, &NiclaSenseEnvSerial::_no2},
-        {IDX_IAQ, &NiclaSenseEnvSerial::_iaq},
-        {IDX_REL_IAQ, &NiclaSenseEnvSerial::_relativeIaq},
-        {IDX_CO2, &NiclaSenseEnvSerial::_co2},
-        {IDX_TVOC, &NiclaSenseEnvSerial::_tvoc},
-        {IDX_ETHANOL, &NiclaSenseEnvSerial::_ethanol},
-        {IDX_ODOR_INTENSITY, &NiclaSenseEnvSerial::_odorIntensity},
-    };
-
-    for (const auto &mapping : floatFields) {
+    for (const auto &mapping : floatFieldMappings) {
         if (fields[mapping.idx].length()) {
             setFloatField(this->*mapping.member, fields[mapping.idx]);
         }
     }
 
-    static const FieldMapping<int> intFields[] = {
-        {IDX_EPA_AQI, &NiclaSenseEnvSerial::_epaAqi},
-        {IDX_FAST_AQI, &NiclaSenseEnvSerial::_fastAqi},
-    };
-
-    for (const auto &mapping : intFields) {
+    for (const auto &mapping : intFieldMappings) {
         if (fields[mapping.idx].length()) {
             setIntField(this->*mapping.member, fields[mapping.idx]);
         }
