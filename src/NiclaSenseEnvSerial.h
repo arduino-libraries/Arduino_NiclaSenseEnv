@@ -30,43 +30,90 @@ public:
     bool update();
 
     // TemperatureHumiditySensor compatible API
-    /** @brief Get the temperature value from the sensor in degrees Celsius. */
+    /**
+     * @brief Get the temperature value from the sensor in degrees Celsius.
+     * @return Temperature in degrees Celsius, or NAN when unavailable.
+     */
     float temperature() const;
-    /** @brief Get the relative humidity value (Range 0-100%). */
+    /**
+     * @brief Get the relative humidity value.
+     * @return Relative humidity percentage in the range 0-100, or NAN when unavailable.
+     */
     float humidity() const;
 
     // OutdoorAirQualitySensor compatible API
-    /** @brief Retrieves the EPA air quality index. Range is 0 to 500. */
-    int airQualityIndex() const;
-    /** @brief Get the fast air quality index (1-minute averaging). */
-    int fastAirQualityIndex() const;
-    /** @brief Get the NO2 value from the outdoor air quality sensor (ppb). */
+    /**
+     * @brief Retrieves the outdoor EPA air quality index.
+     * @return AQI value in the range 0-500, or -1 when unavailable.
+     */
+    int outdoorAirQualityIndex() const;
+    /**
+     * @brief Get the outdoor fast air quality index (1-minute averaging).
+     * @return Fast AQI value in the range 0-500, or -1 when unavailable.
+     */
+    int outdoorFastAirQualityIndex() const;
+    /**
+     * @brief Get the NO2 value from the outdoor air quality sensor.
+     * @return Nitrogen dioxide concentration in ppb, or NAN when unavailable.
+     */
     float NO2() const;
-    /** @brief Get the O3 value from the outdoor air quality sensor (ppb). */
+    /**
+     * @brief Get the O3 value from the outdoor air quality sensor.
+     * @return Ozone concentration in ppb, or NAN when unavailable.
+     */
     float O3() const;
-    /** @brief Interprets the EPA AQI into a textual description. */
-    String airQualityIndexInterpreted() const;
+    /**
+     * @brief Interprets the outdoor EPA AQI into a textual description.
+     * @return Human-readable AQI category (e.g., Good, Moderate) or "unknown" when unavailable.
+     */
+    String outdoorAirQualityIndexInterpreted() const;
 
     // IndoorAirQualitySensor compatible API
-    /** @brief Get the air quality value. Common range 0 to ~5. */
-    float airQuality() const;
-    /** @brief Get the interpreted air quality value (Very Good, Good, Medium, Poor, Bad). */
-    String airQualityInterpreted() const;
-    /** @brief Get the relative air quality value in percent (0 - 100%). */
-    float relativeAirQuality() const;
-    /** @brief Get the CO2 value in ppm. */
+    /**
+     * @brief Get the indoor air quality value.
+     * @return IAQ value (common range 0 to ~5), or NAN when unavailable.
+     */
+    float indoorAirQuality() const;
+    /**
+     * @brief Get the interpreted indoor air quality value.
+     * @return Human-readable IAQ category (Very Good, Good, Medium, Poor, Bad) or "unknown" when unavailable.
+     */
+    String indoorAirQualityInterpreted() const;
+    /**
+     * @brief Get the indoor relative air quality value.
+     * @return Relative IAQ percentage in the range 0-100, or NAN when unavailable.
+     */
+    float indoorRelativeAirQuality() const;
+
+    /**
+     * @brief Get the CO2 value.
+     * @return Estimated CO2 concentration in ppm, or NAN when unavailable.
+     */
     float CO2() const;
-    /** @brief Get the TVOC value in mg/m^3. */
+    /**
+     * @brief Get the TVOC value.
+     * @return Total volatile organic compounds concentration in mg/m^3, or NAN when unavailable.
+     */
     float TVOC() const;
-    /** @brief Get the ethanol value in ppm. */
+    /**
+     * @brief Get the ethanol value.
+     * @return Ethanol concentration in ppm, or NAN when unavailable.
+     */
     float ethanol() const;
-    /** @brief Get the odor intensity value. */
+    /**
+     * @brief Get the odor intensity value.
+     * @return Odor intensity (sensor-specific scale), or NAN when unavailable.
+     */
     float odorIntensity() const;
-    /** @brief Get the sulfur odor-detected value (true or false). */
+    /**
+     * @brief Get the sulfur odor-detected flag.
+     * @return true when sulfur odor is detected, false otherwise.
+     */
     bool sulfurOdor() const;
 
     /**
      * @brief Returns the last error message received over UART, empty when none.
+     * @return Error string from the device, or an empty String when no error is present.
      */
     String lastErrorMessage() const;
 

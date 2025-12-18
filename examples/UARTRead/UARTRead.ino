@@ -56,81 +56,81 @@ void loop() {
 
     float temperature = niclaSerial.temperature();
     if (!isnan(temperature)) {
-        Serial.print("🌡 HS4001 temperature (°C): ");
+        Serial.print("🌡 Temperature (°C): ");
         Serial.println(temperature);
     }
 
     float humidity = niclaSerial.humidity();
     if (!isnan(humidity)) {
-        Serial.print("💧 HS4001 humidity (%RH): ");
+        Serial.print("💧 Humidity (%RH): ");
         Serial.println(humidity);
     }
 
-    int epaAqi = niclaSerial.airQualityIndex();
+    int epaAqi = niclaSerial.outdoorAirQualityIndex();
     if (epaAqi >= 0) {
-        Serial.print("🏭 ZMOD4510 EPA AQI: ");
+        Serial.print("🏭 Outdoor EPA AQI: ");
         Serial.println(epaAqi);
-        Serial.print("🏭 ZMOD4510 EPA AQI interpreted: ");
-        Serial.println(niclaSerial.airQualityIndexInterpreted());
+        Serial.print("🏭 Outdoor EPA AQI interpreted: ");
+        Serial.println(niclaSerial.outdoorAirQualityIndexInterpreted());
     }
 
-    int fastAqi = niclaSerial.fastAirQualityIndex();
+    int fastAqi = niclaSerial.outdoorFastAirQualityIndex();
     if (fastAqi >= 0) {
-        Serial.print("🏭 ZMOD4510 Fast AQI: ");
+        Serial.print("🏭 Outdoor Fast AQI: ");
         Serial.println(fastAqi);
     }
 
     float o3 = niclaSerial.O3();
     if (!isnan(o3)) {
-        Serial.print("🌬 ZMOD4510 O3 (ppb): ");
+        Serial.print("🌬 Outdoor O3 (ppb): ");
         Serial.println(o3);
     }
 
     float no2 = niclaSerial.NO2();
     if (!isnan(no2)) {
-        Serial.print("🌬 ZMOD4510 NO2 (ppb): ");
+        Serial.print("🌬 Outdoor NO2 (ppb): ");
         Serial.println(no2);
     }
 
-    float iaq = niclaSerial.airQuality();
+    float iaq = niclaSerial.indoorAirQuality();
     if (!isnan(iaq)) {
-        Serial.print("🏠 ZMOD4410 IAQ: ");
+        Serial.print("🏠 Indoor IAQ: ");
         Serial.println(iaq);
-        Serial.print("🏠 ZMOD4410 IAQ interpreted: ");
-        Serial.println(niclaSerial.airQualityInterpreted());
+        Serial.print("🏠 Indoor IAQ interpreted: ");
+        Serial.println(niclaSerial.indoorAirQualityInterpreted());
     }
 
-    float relIaq = niclaSerial.relativeAirQuality();
+    float relIaq = niclaSerial.indoorRelativeAirQuality();
     if (!isnan(relIaq)) {
-        Serial.print("🏠 ZMOD4410 Rel IAQ: ");
+        Serial.print("🏠 Indoor relative IAQ: ");
         Serial.println(relIaq);
     }
 
     float co2 = niclaSerial.CO2();
     if (!isnan(co2)) {
-        Serial.print("🌬 ZMOD4410 eCO2 (ppm): ");
+        Serial.print("🌬 Indoor eCO2 (ppm): ");
         Serial.println(co2);
     }
 
     float tvoc = niclaSerial.TVOC();
     if (!isnan(tvoc)) {
-        Serial.print("🌬 ZMOD4410 TVOC (mg/m^3): ");
+        Serial.print("🌬 Indoor TVOC (mg/m^3): ");
         Serial.println(tvoc);
     }
 
     float ethanol = niclaSerial.ethanol();
     if (!isnan(ethanol)) {
-        Serial.print("🍺 ZMOD4410 EtOH (ppm): ");
+        Serial.print("🍺 Ethanol (ppm): ");
         Serial.println(ethanol);
     }
 
     float odorIntensity = niclaSerial.odorIntensity();
     if (!isnan(odorIntensity)) {
-        Serial.print("👃 ZMOD4410 intensity: ");
+        Serial.print("👃 Odor intensity: ");
         Serial.println(odorIntensity);
     }
 
-    Serial.print("👃 ZMOD4410 odor: ");
+    Serial.print("👃 Sulfur odor: ");
     Serial.println(niclaSerial.sulfurOdor() ? "detected" : "not detected");
 
     Serial.println();

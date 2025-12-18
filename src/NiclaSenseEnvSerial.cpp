@@ -97,13 +97,13 @@ bool NiclaSenseEnvSerial::update() {
 float NiclaSenseEnvSerial::temperature() const { return _temperature; }
 float NiclaSenseEnvSerial::humidity() const { return _humidity; }
 
-int NiclaSenseEnvSerial::airQualityIndex() const { return _epaAqi; }
-int NiclaSenseEnvSerial::fastAirQualityIndex() const { return _fastAqi; }
+int NiclaSenseEnvSerial::outdoorAirQualityIndex() const { return _epaAqi; }
+int NiclaSenseEnvSerial::outdoorFastAirQualityIndex() const { return _fastAqi; }
 float NiclaSenseEnvSerial::NO2() const { return _no2; }
 float NiclaSenseEnvSerial::O3() const { return _o3; }
 
-String NiclaSenseEnvSerial::airQualityIndexInterpreted() const {
-    int airQualityValue = airQualityIndex();
+String NiclaSenseEnvSerial::outdoorAirQualityIndexInterpreted() const {
+    int airQualityValue = outdoorAirQualityIndex();
     if (airQualityValue < 0) {
         return String("unknown");
     }
@@ -122,10 +122,10 @@ String NiclaSenseEnvSerial::airQualityIndexInterpreted() const {
     }
 }
 
-float NiclaSenseEnvSerial::airQuality() const { return _iaq; }
+float NiclaSenseEnvSerial::indoorAirQuality() const { return _iaq; }
 
-String NiclaSenseEnvSerial::airQualityInterpreted() const {
-    float iaqValue = airQuality();
+String NiclaSenseEnvSerial::indoorAirQualityInterpreted() const {
+    float iaqValue = indoorAirQuality();
     if (isnan(iaqValue)) {
         return String("unknown");
     }
@@ -142,7 +142,7 @@ String NiclaSenseEnvSerial::airQualityInterpreted() const {
     }
 }
 
-float NiclaSenseEnvSerial::relativeAirQuality() const { return _relativeIaq; }
+float NiclaSenseEnvSerial::indoorRelativeAirQuality() const { return _relativeIaq; }
 float NiclaSenseEnvSerial::CO2() const { return _co2; }
 float NiclaSenseEnvSerial::TVOC() const { return _tvoc; }
 float NiclaSenseEnvSerial::ethanol() const { return _ethanol; }
